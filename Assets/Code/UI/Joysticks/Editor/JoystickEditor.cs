@@ -44,8 +44,14 @@ namespace UI.Joysticks.Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_IsActive"));
             
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("On Value Changed");
+            EditorGUILayout.LabelField("Events");
+            
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("m_OnBeginDragEvent"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("m_OnEndDragEvent"));
+            
+            EditorGUILayout.Space();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_OnValueChanged"));
+            
             EditorGUI.indentLevel--;
             
             EditorGUILayout.EndVertical();

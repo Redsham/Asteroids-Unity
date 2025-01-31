@@ -7,6 +7,9 @@ namespace UI.Joysticks
 {
     public abstract class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
+        /// <summary>
+        /// Is the joystick currently active
+        /// </summary>
         public bool IsActive
         {
             get => m_IsActive;
@@ -18,8 +21,14 @@ namespace UI.Joysticks
         }
         [SerializeField] private bool m_IsActive = true;
         
+        /// <summary>
+        /// Is the joystick currently being dragged
+        /// </summary>
         public bool IsDragging { get; private set; }
 
+        /// <summary>
+        /// The value of the joystick in a range of -1 to 1
+        /// </summary>
         public Vector2 Value
         {
             get => m_Value;
@@ -29,8 +38,16 @@ namespace UI.Joysticks
                 m_OnValueChanged.Invoke(value);
             }
         }
+        /// <summary>
+        /// The direction of the joystick
+        /// </summary>
         public Vector2 Direction => Value.normalized;
         private Vector2 m_Value;
+        
+        /// <summary>
+        /// The screen coordinates of pointer (mouse or touch)
+        /// </summary>
+        protected Vector2 Point { get; private set; }
         
         public                   UnityEvent<Vector2> OnValueChanged => m_OnValueChanged;
         [SerializeField] private UnityEvent<Vector2> m_OnValueChanged = new();
@@ -40,13 +57,9 @@ namespace UI.Joysticks
 
         public                    UnityEvent OnEndDragEvent   => m_OnEndDragEvent;
         [SerializeField]  private UnityEvent m_OnEndDragEvent   = new();
+        
 
-        /// <summary>
-        /// The screen coordinates of pointer (mouse or touch)
-        /// </summary>
-        protected Vector2 Point { get; private set; }
-        
-        
+        #region Unity Methods
 
         private void Awake()
         {
@@ -86,6 +99,10 @@ namespace UI.Joysticks
             Value = Vector2.zero;
         }
 
+        #endregion
+
+        #region Joystick Methods
+
         public abstract void Initialize();
         
         public abstract void OnBeginDrag();
@@ -103,5 +120,7 @@ namespace UI.Joysticks
             
             Value = Vector2.zero;
         }
+
+        #endregion
     }
 }
