@@ -8,14 +8,13 @@ namespace Gameplay.Player.Inputs
     {
         private Vector2 m_Direction;
         private bool m_IsThrusting;
-        private bool m_IsFiring;
 
         private readonly PIDController m_RotationPidController = new(2.0f, 0.1f, 0.2f);
-        
+
         
         public void SetDirection(Vector2 direction) => m_Direction = direction;
         public void SetThrust(bool isHolding) => m_IsThrusting = isHolding;
-        public void SetFire(bool isHolding) => m_IsFiring = isHolding;
+        public void SetFire(bool isHolding) => Gunner.IsFiring = isHolding;
 
         
         public void FixedTick()

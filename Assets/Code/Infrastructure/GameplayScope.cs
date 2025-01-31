@@ -1,3 +1,4 @@
+using Gameplay.Asteroids;
 using Gameplay.Player;
 using Gameplay.Player.Inputs;
 using Gameplay.Projectiles;
@@ -16,14 +17,16 @@ namespace Infrastructure
         protected override void Configure(IContainerBuilder builder)
         {
             // Register unbound space
-            builder.RegisterComponentInHierarchy<UnboundedSpaceBehaviour>();
+            builder.RegisterComponentInHierarchy<UnboundedSpaceManager>();
             
-            // Register projectiles manager
+            // Register managers
             builder.RegisterComponentInHierarchy<ProjectilesManager>();
+            builder.RegisterComponentInHierarchy<AsteroidsManager>();
             
             // Register player
             builder.RegisterComponentInHierarchy<PlayerMovement>();
             builder.RegisterComponentInHierarchy<PlayerGunner>();
+            builder.RegisterComponentInHierarchy<PlayerCollision>();
             
             // Register player input
             if (m_IsMobile)

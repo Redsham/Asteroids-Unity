@@ -1,4 +1,3 @@
-using System;
 using Gameplay.UnboundedSpace;
 using Other;
 using UnityEngine;
@@ -23,8 +22,7 @@ namespace Gameplay.Player
         
         [SerializeField] private MovementConfiguration m_MovementConfiguration;
         
-        [Inject] private UnboundedSpaceBehaviour m_UnboundedSpace;
-
+        [Inject] private UnboundedSpaceManager m_UnboundedSpace;
 
         
         [Inject]
@@ -35,7 +33,12 @@ namespace Gameplay.Player
         }
         private void OnDestroy() => m_UnboundedSpace.Unregister(this);
 
-        
+        private void FixedUpdate()
+        {
+            Rigidbody2D.linearVelocity = Vector2.Lerp(Rigidbody2D.linearVelocity, Vector2.zero, m_MovementConfiguration.Deceleration * Time.fixedDeltaTime);
+            Rigidbody2D.angularVelocity = Mathf.Lerp(Rigidbody2D.angularVelocity, 0.0f, m_MovementConfiguration.RotationDeceleration * Time.fixedDeltaTime);
+        }
+
         public void Thrust(float throttle)
         {
             throttle = Mathf.Clamp(throttle, 0.0f, 1.0f);

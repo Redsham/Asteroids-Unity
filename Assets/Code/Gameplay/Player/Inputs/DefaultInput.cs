@@ -8,7 +8,7 @@ namespace Gameplay.Player.Inputs
 {
     public class DefaultInput : Input, IInitializable, IFixedTickable, IDisposable
     {
-        [Inject] private InputActionAsset m_InputActionAsset;
+        [Inject] private readonly InputActionAsset m_InputActionAsset;
         
         private float m_Thrust;
         private float m_Rotation;

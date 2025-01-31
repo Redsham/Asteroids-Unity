@@ -1,4 +1,4 @@
-namespace Gameplay.ObjectsPools
+namespace Utils.ObjectsPools
 {
     public interface IPoolInitializer
     {
@@ -11,5 +11,9 @@ namespace Gameplay.ObjectsPools
     public interface IPoolReturnHandler
     {
         void OnPoolReturn();
+    }
+    public interface IPoollable
+    {
+        bool IsUsing { get; set; }
     }
 }

@@ -37,6 +37,17 @@ namespace Other
             
             return new Vector2(x, y);
         }
+        public Vector2 RandomPoint()
+        {
+            return new Vector2(Random.Range(Min.x, Max.x), Random.Range(Min.y, Max.y));
+        }
+        public Vector2 RandomPointOnEdge()
+        {
+            float x = Random.Range(Min.x, Max.x);
+            float y = Random.Range(Min.y, Max.y);
+            
+            return Random.value < 0.5f ? new Vector2(x, Random.value < 0.5f ? Min.y : Max.y) : new Vector2(Random.value < 0.5f ? Min.x : Max.x, y);
+        }
         
         public Bounds2D Expand(Vector2 amount)
         {
@@ -57,5 +68,6 @@ namespace Other
         }
         public static Bounds2D FromCenter(Vector2 center, float width, float height) => FromCenter(center, new Vector2(width, height));
         public static Bounds2D FromPoint(Vector2 point) => new(point, point);
+        public static Bounds2D FromPoint(Vector2 point, float radius) => new(point - new Vector2(radius, radius), point + new Vector2(radius, radius));
     }
 }
