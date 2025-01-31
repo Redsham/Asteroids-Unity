@@ -1,0 +1,16 @@
+{
+    "name": "UnboundedSpace",
+    "rootNamespace": "",
+    "references": [
+        "GUID:36c4de29ff4e57b45b795a8a437556e8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

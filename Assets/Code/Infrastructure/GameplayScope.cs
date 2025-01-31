@@ -1,6 +1,7 @@
-using Gameplay;
 using Gameplay.Player;
 using Gameplay.Player.Inputs;
+using Gameplay.Projectiles;
+using Gameplay.UnboundedSpace;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -17,8 +18,12 @@ namespace Infrastructure
             // Register unbound space
             builder.RegisterComponentInHierarchy<UnboundedSpaceBehaviour>();
             
-            // Register player movement
+            // Register projectiles manager
+            builder.RegisterComponentInHierarchy<ProjectilesManager>();
+            
+            // Register player
             builder.RegisterComponentInHierarchy<PlayerMovement>();
+            builder.RegisterComponentInHierarchy<PlayerGunner>();
             
             // Register player input
             if (m_IsMobile)

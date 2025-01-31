@@ -56,5 +56,6 @@ namespace Other
             return new Bounds2D(center - halfSize, center + halfSize);
         }
         public static Bounds2D FromCenter(Vector2 center, float width, float height) => FromCenter(center, new Vector2(width, height));
+        public static Bounds2D FromPoint(Vector2 point) => new(point, point);
     }
 }

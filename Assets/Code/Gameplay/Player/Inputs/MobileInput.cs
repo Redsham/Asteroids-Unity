@@ -21,13 +21,13 @@ namespace Gameplay.Player.Inputs
         public void FixedTick()
         {
             // Calculate rotation with PID controller
-            float currentAngle = Vector2.SignedAngle(Vector2.up, PlayerMovement.transform.up);
+            float currentAngle = Vector2.SignedAngle(Vector2.up, Movement.transform.up);
             float targetAngle  = Vector2.SignedAngle(Vector2.up, Vector2.ClampMagnitude(m_Direction, 1.0f));
             float errorAngle   = Mathf.DeltaAngle(currentAngle, targetAngle);
             float angularThrottle = m_RotationPidController.Calculate(0.0f, errorAngle, Time.fixedDeltaTime);
             
-            PlayerMovement.Rotate(angularThrottle);
-            PlayerMovement.Thrust(m_IsThrusting ? 1.0f : 0.0f);
+            Movement.Rotate(angularThrottle);
+            Movement.Thrust(m_IsThrusting ? 1.0f : 0.0f);
         }
     }
 }

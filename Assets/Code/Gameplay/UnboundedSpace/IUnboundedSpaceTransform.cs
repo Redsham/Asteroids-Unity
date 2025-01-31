@@ -1,7 +1,7 @@
 using Other;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.UnboundedSpace
 {
     public interface IUnboundedSpaceTransform
     {

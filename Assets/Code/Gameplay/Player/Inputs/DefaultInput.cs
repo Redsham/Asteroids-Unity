@@ -26,8 +26,8 @@ namespace Gameplay.Player.Inputs
         }
         public void FixedTick()
         {
-            PlayerMovement.Thrust(m_Thrust);
-            PlayerMovement.Rotate(m_Rotation);
+            Movement.Thrust(m_Thrust);
+            Movement.Rotate(m_Rotation);
         }
         
         private void OnMove(InputAction.CallbackContext context)
@@ -39,7 +39,7 @@ namespace Gameplay.Player.Inputs
         }
         private void OnFire(InputAction.CallbackContext context)
         {
-            
+            Gunner.IsFiring = context.ReadValueAsButton();
         }
 
         public void Dispose()
