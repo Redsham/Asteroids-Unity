@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5288807185561090451}
   - component: {fileID: 6269980879929436769}
   m_Layer: 0
-  m_Name: Thruster
+  m_Name: Thruster-Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4851,9 +4851,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2530672470507614523}
-  - component: {fileID: 8283006355998665396}
   - component: {fileID: 2545751758419691143}
   - component: {fileID: 3147170682732195304}
+  - component: {fileID: 8283006355998665396}
+  - component: {fileID: 4439852343811708866}
   - component: {fileID: 4471722722436494311}
   - component: {fileID: 8702774122211782121}
   - component: {fileID: 1336147477859706762}
@@ -4880,18 +4881,6 @@ Transform:
   - {fileID: 3501954414691260771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8283006355998665396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5235576272243924727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9942300f1da40f7bc6d409de56d267f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2545751758419691143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4904,12 +4893,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b70dc114f0adf343bdb6da2770e8127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovementConfiguration:
-    m_MaxSpeed: 15
-    m_Acceleration: 10
-    m_RotationSpeed: 180
-    m_Deceleration: 0.5
-    m_RotationDeceleration: 0.5
+  m_Configuration:
+    m_MaxSpeed: 20
+    m_Acceleration: 1000
+    m_RotationSpeed: 120
+    m_LinearDrag: 1.5
+    m_AngularDrag: 1.5
 --- !u!114 &3147170682732195304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4924,6 +4913,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FireRate: 8
   m_MaxProjectiles: 4
+  m_ProjectileSpeed: 10
+--- !u!114 &8283006355998665396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5235576272243924727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9942300f1da40f7bc6d409de56d267f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4439852343811708866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5235576272243924727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cdf5e765294371a5b29b1a6b387234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ThrusterParticles: {fileID: 5288807185561090451}
 --- !u!212 &4471722722436494311
 SpriteRenderer:
   m_ObjectHideFlags: 0

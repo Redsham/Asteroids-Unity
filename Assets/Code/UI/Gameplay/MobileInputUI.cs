@@ -1,6 +1,7 @@
 using System;
-using Code.UI.Buttons;
 using Gameplay.Player.Inputs;
+using UI.Elements.Buttons;
+using UI.Elements.Joysticks;
 using UI.Joysticks;
 using UnityEngine;
 using VContainer;

@@ -32,7 +32,7 @@ namespace Infrastructure
             if (m_IsMobile)
                 builder.RegisterEntryPoint<MobileInput>().As<Input>();
             else
-                builder.RegisterEntryPoint<DefaultInput>().As<Input>();
+                builder.RegisterEntryPoint<DesktopInput>().As<Input>();
         }
     }
 }

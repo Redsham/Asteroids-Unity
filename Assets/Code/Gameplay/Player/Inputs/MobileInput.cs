@@ -13,20 +13,19 @@ namespace Gameplay.Player.Inputs
 
         
         public void SetDirection(Vector2 direction) => m_Direction = direction;
-        public void SetThrust(bool isHolding) => m_IsThrusting = isHolding;
-        public void SetFire(bool isHolding) => Gunner.IsFiring = isHolding;
+        public void SetThrust(bool       isHolding) => LinearThrust = m_IsThrusting ? 1.0f : 0.0f;
+        public void SetFire(bool         isHolding) => IsFiring = isHolding;
 
         
         public void FixedTick()
         {
             // Calculate rotation with PID controller
-            float currentAngle = Vector2.SignedAngle(Vector2.up, Movement.transform.up);
-            float targetAngle  = Vector2.SignedAngle(Vector2.up, Vector2.ClampMagnitude(m_Direction, 1.0f));
-            float errorAngle   = Mathf.DeltaAngle(currentAngle, targetAngle);
-            float angularThrottle = m_RotationPidController.Calculate(0.0f, errorAngle, Time.fixedDeltaTime);
+            float currentAngle    = Vector2.SignedAngle(Vector2.up, Movement.transform.up);
+            float targetAngle     = Vector2.SignedAngle(Vector2.up, m_Direction);
+            float errorAngle      = Mathf.DeltaAngle(currentAngle, targetAngle);
+            float angularThrottle = -m_RotationPidController.Calculate(0.0f, errorAngle, Time.fixedDeltaTime);
             
-            Movement.Rotate(angularThrottle);
-            Movement.Thrust(m_IsThrusting ? 1.0f : 0.0f);
+            AngularThrust = angularThrottle;
         }
     }
 }

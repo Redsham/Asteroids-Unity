@@ -6,12 +6,9 @@ using VContainer.Unity;
 
 namespace Gameplay.Player.Inputs
 {
-    public class DefaultInput : Input, IInitializable, IFixedTickable, IDisposable
+    public class DesktopInput : Input, IInitializable, IDisposable
     {
         [Inject] private readonly InputActionAsset m_InputActionAsset;
-        
-        private float m_Thrust;
-        private float m_Rotation;
         
         public void Initialize()
         {
@@ -24,23 +21,15 @@ namespace Gameplay.Player.Inputs
             fire.performed += OnFire;
             fire.canceled  += OnFire;
         }
-        public void FixedTick()
-        {
-            Movement.Thrust(m_Thrust);
-            Movement.Rotate(m_Rotation);
-        }
         
         private void OnMove(InputAction.CallbackContext context)
         {
             Vector2 value = context.ReadValue<Vector2>();
             
-            m_Thrust = value.y;
-            m_Rotation = value.x;
+            LinearThrust  = value.y;
+            AngularThrust = -value.x;
         }
-        private void OnFire(InputAction.CallbackContext context)
-        {
-            Gunner.IsFiring = context.ReadValueAsButton();
-        }
+        private void OnFire(InputAction.CallbackContext context) => IsFiring = context.ReadValueAsButton();
 
         public void Dispose()
         {

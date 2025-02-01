@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI.Joysticks
+namespace UI.Elements.Joysticks
 {
     public class StaticJoystick : Joystick
     {

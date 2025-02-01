@@ -5,12 +5,12 @@ namespace Gameplay.Player
     [System.Serializable]
     public struct MovementConfiguration
     {
-        public float MaxSpeed => m_MaxSpeed;
-        public float Acceleration => m_Acceleration;
+        public float MaxSpeed      => m_MaxSpeed;
+        public float Acceleration  => m_Acceleration;
         public float RotationSpeed => m_RotationSpeed;
         
-        public float Deceleration => m_Deceleration;
-        public float RotationDeceleration => m_RotationDeceleration;
+        public float LinearDrag  => m_LinearDrag;
+        public float AngularDrag => m_AngularDrag;
         
         
         [SerializeField] private float m_MaxSpeed;
@@ -18,7 +18,7 @@ namespace Gameplay.Player
         [SerializeField] private float m_RotationSpeed;
         
         [Space]
-        [SerializeField] private float m_Deceleration;
-        [SerializeField] private float m_RotationDeceleration;
+        [SerializeField] private float m_LinearDrag;
+        [SerializeField] private float m_AngularDrag;
     }
 }

@@ -9,8 +9,18 @@ namespace Gameplay.Player
     public class PlayerMovement : MonoBehaviour, IUnboundedSpaceTransform
     {
         public Rigidbody2D           Rigidbody2D           { get; private set; }
-        public MovementConfiguration MovementConfiguration => m_MovementConfiguration;
+        public MovementConfiguration Configuration => m_Configuration;
 
+        public float LinearThrust
+        {
+            get => m_LinearThrust;
+            set => m_LinearThrust = Mathf.Clamp(value, 0.0f, 1.0f);
+        }
+        public float AngularThrust
+        {
+            get => m_AngularThrust;
+            set => m_AngularThrust = Mathf.Clamp(value, -1.0f, 1.0f);
+        }
         
         public Vector2 Position
         {
@@ -19,10 +29,11 @@ namespace Gameplay.Player
         }
         public Bounds2D Bounds => Bounds2D.FromCenter(Rigidbody2D.position, Vector2.one);
         
-        
-        [SerializeField] private MovementConfiguration m_MovementConfiguration;
+        [SerializeField] private MovementConfiguration m_Configuration;
         
         [Inject] private UnboundedSpaceManager m_UnboundedSpace;
+        private float m_LinearThrust;
+        private float m_AngularThrust;
 
         
         [Inject]
@@ -35,22 +46,16 @@ namespace Gameplay.Player
 
         private void FixedUpdate()
         {
-            Rigidbody2D.linearVelocity = Vector2.Lerp(Rigidbody2D.linearVelocity, Vector2.zero, m_MovementConfiguration.Deceleration * Time.fixedDeltaTime);
-            Rigidbody2D.angularVelocity = Mathf.Lerp(Rigidbody2D.angularVelocity, 0.0f, m_MovementConfiguration.RotationDeceleration * Time.fixedDeltaTime);
-        }
-
-        public void Thrust(float throttle)
-        {
-            throttle = Mathf.Clamp(throttle, 0.0f, 1.0f);
-            Vector2 force = transform.up * throttle * m_MovementConfiguration.Acceleration;
+            // Drag
+            Rigidbody2D.linearVelocity = Vector2.Lerp(Rigidbody2D.linearVelocity, Vector2.zero, m_Configuration.LinearDrag * Time.fixedDeltaTime);
+            Rigidbody2D.angularVelocity = Mathf.Lerp(Rigidbody2D.angularVelocity, 0.0f, m_Configuration.AngularDrag * Time.fixedDeltaTime);
             
-            Rigidbody2D.AddForce(force);
-            Rigidbody2D.linearVelocity = Vector2.ClampMagnitude(Rigidbody2D.linearVelocity, m_MovementConfiguration.MaxSpeed);
-        }
-        public void Rotate(float throttle)
-        {
-            throttle = Mathf.Clamp(throttle, -1.0f, 1.0f);
-            Rigidbody2D.AddTorque(-throttle * m_MovementConfiguration.RotationSpeed * Time.fixedDeltaTime);
+            // Thrust
+            Rigidbody2D.AddForce(transform.up * (LinearThrust * m_Configuration.Acceleration * Time.fixedDeltaTime));
+            Rigidbody2D.AddTorque(AngularThrust * m_Configuration.RotationSpeed * Time.fixedDeltaTime);
+            
+            // Clamp velocity
+            Rigidbody2D.linearVelocity = Vector2.ClampMagnitude(Rigidbody2D.linearVelocity, m_Configuration.MaxSpeed);
         }
     }
 }
