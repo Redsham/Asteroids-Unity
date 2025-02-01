@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Gameplay.UnboundedSpace;
 using UnityEngine;
-using Utils.ObjectsPools;
+using UnityEngine.Pool;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -10,48 +10,85 @@ namespace Gameplay.Asteroids
 {
     public class AsteroidsManager : MonoBehaviour
     {
-        [SerializeField] private  GameObjectsPool<AsteroidBehaviour> m_AsteroidsPool;
-
-        private readonly          List<AsteroidBehaviour> m_Asteroids = new();
-        [Inject] private readonly UnboundedSpaceManager   m_UnboundedSpace;
+        [SerializeField] private AsteroidBehaviour m_Prefab;
+        [SerializeField] private AsteroidDestroyEffect m_DestroyEffect;
+        
+        private IObjectPool<AsteroidBehaviour>     m_AsteroidsPool;
+        private IObjectPool<AsteroidDestroyEffect> m_DestroyEffectPool;
+        
+        private readonly          List<AsteroidBehaviour>       m_Asteroids = new();
+        [Inject] private readonly UnboundedSpaceManager         m_UnboundedSpace;
         
         
         public event Action<AsteroidBehaviour> OnAsteroidDestroyed = delegate { };
         public event Action                    OnAsteroidsCleared  = delegate { };
-        
-        
-        public void Awake() => m_AsteroidsPool.Initialize(transform);
-        
+
+
+        private void Awake()
+        {
+            m_AsteroidsPool = new ObjectPool<AsteroidBehaviour>(
+            () => Instantiate(m_Prefab, transform),
+            instance => instance.gameObject.SetActive(true),
+            instance => instance.gameObject.SetActive(false),
+            instance => Destroy(instance.gameObject));
+            
+            m_DestroyEffectPool = new ObjectPool<AsteroidDestroyEffect>(
+                () =>
+                {
+                    AsteroidDestroyEffect instance = Instantiate(m_DestroyEffect, transform);
+                    instance.Initialize(m_DestroyEffectPool);
+                    return instance;
+                },
+            instance => instance.gameObject.SetActive(true),
+            instance => instance.gameObject.SetActive(false),
+            instance => Destroy(instance.gameObject));
+        }
+        private void Start()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 position = Random.insideUnitCircle * 10.0f;
+                Vector2 velocity = Random.insideUnitCircle.normalized * Random.Range(3.0f, 5.0f);
+                Spawn(position, velocity, 2);
+            }
+        }
+
         public void Spawn(Vector2 position, Vector2 velocity, int level)
         {
             // Get asteroid from pool
             AsteroidBehaviour asteroid = m_AsteroidsPool.Get();
             
             // Initialize asteroid
-            asteroid.Level = level;
+            asteroid.Initialize(level);
+            
+            // Initialize asteroid
             asteroid.Velocity = velocity;
             asteroid.Position = position;
-            asteroid.OnDestroy += instance =>
+            asteroid.OnDestroy += () =>
             {
                 // Invoke events
-                OnAsteroidDestroyed.Invoke(instance);
+                OnAsteroidDestroyed.Invoke(asteroid);
                 if (m_Asteroids.Count == 0)
                     OnAsteroidsCleared.Invoke();
                 
+                // Play destroy effect
+                AsteroidDestroyEffect effect = m_DestroyEffectPool.Get();
+                effect.Play(asteroid);
+                
+                // Calculate child level
+                int childLevel = asteroid.Level - 1;
+                
                 // Despawn asteroid
-                Despawn(instance);
+                Despawn(asteroid);
 
                 // Spawn smaller asteroids
-                if (instance.Level <= 0) return;
+                if (asteroid.Level <= 0) return;
                 for (int i = 0; i < 2; i++)
                 {
-                    Vector2 newVelocity = Random.insideUnitCircle.normalized * Random.Range(1.0f, 3.0f);
-                    Spawn(instance.Position, newVelocity, instance.Level - 1);
+                    Vector2 childVelocity = Random.insideUnitCircle.normalized * Random.Range(1.0f, 3.0f);
+                    Spawn(asteroid.Position, childVelocity, childLevel);
                 }
             };
-            
-            // Generate asteroid
-            asteroid.Generate(level);
             
             // Register asteroid
             m_UnboundedSpace.Register(asteroid);
@@ -59,9 +96,12 @@ namespace Gameplay.Asteroids
         }
         public void Despawn(AsteroidBehaviour asteroid)
         {
+            asteroid.Despawn();
+            
             m_UnboundedSpace.Unregister(asteroid);
             m_Asteroids.Remove(asteroid);
-            m_AsteroidsPool.Return(asteroid);
+            
+            m_AsteroidsPool.Release(asteroid);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gameplay.Player
 {
-    public class PlayerCollision : MonoBehaviour, IProjectileCollision, IAsteroidCollisionHandler
+    public class PlayerCollision : MonoBehaviour, IProjectileCollision, IAsteroidCollision
     {
         public void OnAsteroidCollision(AsteroidBehaviour asteroid)
         {

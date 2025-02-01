@@ -7,7 +7,7 @@ namespace Gameplay.Player
     {
         [SerializeField] private ParticleSystem m_ThrusterParticles;
 
-        private PlayerMovement       m_Movement;
+        private PlayerMovement                m_Movement;
         private ParticleSystem.EmissionModule m_ThrusterEmission;
         
         private float m_ThrusterEmissionRate;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gameplay.Asteroids
 {
-    public static class AsteroidsGenerator
+    internal static class AsteroidsGenerator
     {
         private const int VERTEX_COUNT = 12;
         private const float ROUGHNESS = 0.1f;

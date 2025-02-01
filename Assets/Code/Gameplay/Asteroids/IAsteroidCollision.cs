@@ -1,6 +1,6 @@
 namespace Gameplay.Asteroids
 {
-    public interface IAsteroidCollisionHandler
+    public interface IAsteroidCollision
     {
         void OnAsteroidCollision(AsteroidBehaviour asteroid);
     }

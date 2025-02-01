@@ -1,3 +1,4 @@
+using Gameplay.Player.Configs;
 using Gameplay.Projectiles;
 using UnityEngine;
 using VContainer;
@@ -8,9 +9,7 @@ namespace Gameplay.Player
     {
         public bool IsFiring { get; set; }
 
-        [SerializeField] private float m_FireRate       = 8.0f;
-        [SerializeField] private int   m_MaxProjectiles = 4;
-        [SerializeField] private float m_ProjectileSpeed = 10.0f;
+        [SerializeField] private GunConfiguration m_Configuration;
         
         private float                m_Cooldown;
         private int                  m_ProjectilesCount;
@@ -35,16 +34,21 @@ namespace Gameplay.Player
             if (m_Cooldown > 0.0f)
                 return;
             
-            if (m_ProjectilesCount >= m_MaxProjectiles)
+            if (m_ProjectilesCount >= m_Configuration.MaxProjectiles)
                 return;
 
+            Fire();
+        }
+        private void Fire()
+        {
             // Fire
-            m_Cooldown = 1.0f / m_FireRate;
+            m_Cooldown = 1.0f / m_Configuration.FireRate;
             m_ProjectilesCount++;
             
-            Vector2 projectileVelocity = m_Rigidbody2D.linearVelocity + (Vector2)transform.up * m_ProjectileSpeed;
-            Projectile projectile = m_ProjectilesManager.Spawn(transform.position, projectileVelocity, m_Collision);
-            projectile.OnDespawn += _ => m_ProjectilesCount--;
+            Vector2 velocity      = m_Rigidbody2D.linearVelocity + (Vector2)transform.up * m_Configuration.ProjectileSpeed;
+            float  lifetime       = m_Configuration.ProjectileLifetime;
+            Projectile projectile = m_ProjectilesManager.Spawn(transform.position, velocity, lifetime, m_Collision);
+            projectile.OnDespawn += () => m_ProjectilesCount--;
         }
     }
 }

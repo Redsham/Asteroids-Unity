@@ -1,6 +1,8 @@
+using System;
+
 namespace Other
 {
-    [System.Serializable]
+    [Serializable]
     public class PIDController
     {
         public PIDController()

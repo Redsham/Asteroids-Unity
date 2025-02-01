@@ -614,10 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6199633e0e11434e8a9d72c3399c57ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AsteroidsPool:
-    m_Prefab: {fileID: 279914892773141932, guid: 9714bc50ad0125845bdb320bc9447acb, type: 3}
-    m_InitialSize: 4
-    m_Parent: {fileID: 1465478035}
+  m_Prefab: {fileID: 279914892773141932, guid: 9714bc50ad0125845bdb320bc9447acb, type: 3}
+  m_DestroyEffect: {fileID: 1053950237641544385, guid: 7475813dfae872241a8b9dda12b8a91a, type: 3}
 --- !u!224 &1483446950 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7422942049878587327, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
@@ -751,10 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f244fb2afe462fa941c5a4ba7262cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ProjectilesPool:
-    m_Prefab: {fileID: 5948962553756148265, guid: f0611a69c7da05249a52dd6369d503c6, type: 3}
-    m_InitialSize: 4
-    m_Parent: {fileID: 1888076687}
+  m_Prefab: {fileID: 5948962553756148265, guid: f0611a69c7da05249a52dd6369d503c6, type: 3}
 --- !u!1001 &179070630213643492
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
-namespace Gameplay.Player
+namespace Gameplay.Player.Configs
 {
-    [System.Serializable]
+    [Serializable]
     public struct MovementConfiguration
     {
         public float MaxSpeed      => m_MaxSpeed;

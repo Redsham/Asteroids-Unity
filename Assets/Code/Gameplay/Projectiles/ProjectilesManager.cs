@@ -1,66 +1,49 @@
-using System.Collections.Generic;
 using Gameplay.UnboundedSpace;
 using UnityEngine;
-using Utils.ObjectsPools;
+using UnityEngine.Pool;
 using VContainer;
 
 namespace Gameplay.Projectiles
 {
     public class ProjectilesManager : MonoBehaviour
     {
-        [SerializeField] private GameObjectsPool<Projectile> m_ProjectilesPool;
-
-
-        private readonly          List<Projectile>        m_Projectiles = new();
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
-        
-        public void Awake() => m_ProjectilesPool.Initialize(transform);
-        public void FixedUpdate()
-        {
-            float deltaTime = Time.fixedDeltaTime;
+        [SerializeField] private Projectile             m_Prefab;
 
-            for (int i = m_Projectiles.Count - 1; i >= 0; i--)
-            {
-                Projectile projectile = m_Projectiles[i];
-                projectile.FixedTick(deltaTime);
-                
-                // Skip projectile if it's not in use
-                if (!projectile.IsUsing)
-                {
-                    i--;
-                    continue;
-                }
-                
-                // Despawn projectile if lifetime is over
-                if (projectile.Lifetime <= 0)
-                {
-                    Despawn(projectile);
-                    i--;
-                }
-            }
+        private IObjectPool<Projectile> m_ProjectilesPool;
+
+        private void Awake()
+        {
+            m_ProjectilesPool = new ObjectPool<Projectile>(
+            () => Instantiate(m_Prefab, transform),
+            instance => {
+                instance.gameObject.SetActive(true);
+            },
+            instance => instance.gameObject.SetActive(false),
+            x => Destroy(x.gameObject));
         }
         
-        
-        public Projectile Spawn(Vector2 position, Vector2 velocity, IProjectileCollision ignoreCollision = null)
+        public Projectile Spawn(Vector2 position, Vector2 velocity, float lifetime = 2.0f, IProjectileCollision ignoreCollision = null)
         {
             Projectile projectile = m_ProjectilesPool.Get();
-            
-            projectile.Velocity = velocity;
-            projectile.transform.position = position;
+
+            projectile.Lifetime        = lifetime;
+            projectile.Velocity        = velocity;
+            projectile.Position        = position;
             projectile.IgnoreCollision = ignoreCollision;
-            projectile.OnCollision += collision => Despawn(projectile);
+            
+            projectile.OnCollision        += _ => Despawn(projectile);
+            projectile.OnLifetimeEnd      += () => Despawn(projectile);
             
             m_UnboundedSpace.Register(projectile);
-            m_Projectiles.Add(projectile);
             
             return projectile;
         }
         public void Despawn(Projectile projectile)
         {
+            projectile.Despawn();
             m_UnboundedSpace.Unregister(projectile);
-            
-            m_Projectiles.Remove(projectile);
-            m_ProjectilesPool.Return(projectile);
+            m_ProjectilesPool.Release(projectile);
         }
     }
 }

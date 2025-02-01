@@ -4911,9 +4911,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185e0ab2de83434e9cff7d264c4d2bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FireRate: 8
-  m_MaxProjectiles: 4
-  m_ProjectileSpeed: 10
+  m_Configuration:
+    m_FireRate: 8
+    m_MaxProjectiles: 4
+    m_ProjectileSpeed: 25
+    m_ProjectileLifetime: 1
 --- !u!114 &8283006355998665396
 MonoBehaviour:
   m_ObjectHideFlags: 0
