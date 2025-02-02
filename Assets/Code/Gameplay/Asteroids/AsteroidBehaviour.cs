@@ -34,7 +34,7 @@ namespace Gameplay.Asteroids
         
         #region Collision
 
-        public void OnProjectileCollision(Projectile projectile) => OnDestroy.Invoke();
+        public void OnProjectileCollision(ProjectileCollisionData projectile) => OnDestroy.Invoke();
         private void OnCollisionEnter2D(Collision2D other)
         {
             if(!other.collider.TryGetComponent(out IAsteroidCollision collisionHandler))

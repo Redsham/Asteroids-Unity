@@ -49,25 +49,20 @@ namespace Other
             return Random.value < 0.5f ? new Vector2(x, Random.value < 0.5f ? Min.y : Max.y) : new Vector2(Random.value < 0.5f ? Min.x : Max.x, y);
         }
         
-        public Bounds2D Expand(Vector2 amount)
-        {
-            return new Bounds2D(Min - amount, Max + amount);
-        }
-        public Bounds2D Expand(float amount) => Expand(new Vector2(amount, amount));
-        
-        public Bounds2D Translate(Vector2 amount)
-        {
-            return new Bounds2D(Min + amount, Max + amount);
-        }
-        public Bounds2D Translate(float x, float y) => Translate(new Vector2(x, y));
+        public Bounds2D Expand(Vector2 amount) => new(Min - amount, Max + amount);
+        public Bounds2D Expand(float   amount) => Expand(new Vector2(amount, amount));
+
+        public Bounds2D Translate(Vector2 amount)     => new(Min + amount, Max + amount);
+        public Bounds2D Translate(float   x, float y) => Translate(new Vector2(x, y));
         
         public static Bounds2D FromCenter(Vector2 center, Vector2 size)
         {
-            Vector2 halfSize = size / 2;
+            Vector2 halfSize = size / 2.0f;
             return new Bounds2D(center - halfSize, center + halfSize);
         }
-        public static Bounds2D FromCenter(Vector2 center, float width, float height) => FromCenter(center, new Vector2(width, height));
-        public static Bounds2D FromPoint(Vector2 point) => new(point, point);
-        public static Bounds2D FromPoint(Vector2 point, float radius) => new(point - new Vector2(radius, radius), point + new Vector2(radius, radius));
+        public static Bounds2D FromCenter(Vector2        center, float width, float height) => FromCenter(center, new Vector2(width, height));
+        public static Bounds2D FromPoint(Vector2         point)               => new(point, point);
+        public static Bounds2D FromPoint(Vector2         point, float radius) => new(point - new Vector2(radius, radius), point + new Vector2(radius, radius));
+        public static Bounds2D FromSprite(SpriteRenderer spriteRenderer) => new(spriteRenderer.bounds.min, spriteRenderer.bounds.max);
     }
 }

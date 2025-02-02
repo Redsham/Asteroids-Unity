@@ -31,22 +31,22 @@ namespace Gameplay.Player
             if (!IsFiring)
                 return;
             
-            if (m_Cooldown > 0.0f)
-                return;
-            
-            if (m_ProjectilesCount >= m_Configuration.MaxProjectiles)
-                return;
-
             Fire();
         }
+        private bool CanFire() => m_Cooldown <= 0.0f && m_ProjectilesCount < m_Configuration.MaxProjectiles;
         private void Fire()
         {
-            // Fire
+            if (!CanFire()) 
+                return;
+            
+            // Reset cooldown
             m_Cooldown = 1.0f / m_Configuration.FireRate;
             m_ProjectilesCount++;
             
+            // Spawn projectile
             Vector2 velocity      = m_Rigidbody2D.linearVelocity + (Vector2)transform.up * m_Configuration.ProjectileSpeed;
             float  lifetime       = m_Configuration.ProjectileLifetime;
+            
             Projectile projectile = m_ProjectilesManager.Spawn(transform.position, velocity, lifetime, m_Collision);
             projectile.OnDespawn += () => m_ProjectilesCount--;
         }

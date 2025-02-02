@@ -26,7 +26,7 @@ namespace Infrastructure
             // Register player
             builder.RegisterComponentInHierarchy<PlayerMovement>();
             builder.RegisterComponentInHierarchy<PlayerGunner>();
-            builder.RegisterComponentInHierarchy<PlayerCollision>();
+            builder.RegisterComponentInHierarchy<PlayerBehaviour>();
             
             // Register player input
             if (m_IsMobile)

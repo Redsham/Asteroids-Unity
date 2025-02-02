@@ -9,8 +9,9 @@ namespace Gameplay.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour, IUnboundedSpaceTransform
     {
-        public Rigidbody2D           Rigidbody2D           { get; private set; }
-        public MovementConfiguration Configuration => m_Configuration;
+        public Rigidbody2D           Rigidbody2D    { get; private set; }
+        public SpriteRenderer        SpriteRenderer { get; private set; }
+        public MovementConfiguration Configuration  => m_Configuration;
 
         public float LinearThrust
         {
@@ -28,7 +29,7 @@ namespace Gameplay.Player
             get => Rigidbody2D.position;
             set => Rigidbody2D.MovePosition(value);
         }
-        public Bounds2D Bounds => Bounds2D.FromCenter(Rigidbody2D.position, Vector2.one);
+        public Bounds2D Bounds => Bounds2D.FromSprite(SpriteRenderer);
         
         [SerializeField] private MovementConfiguration m_Configuration;
         
@@ -40,7 +41,9 @@ namespace Gameplay.Player
         [Inject]
         public void Construct()
         {
-            Rigidbody2D = GetComponent<Rigidbody2D>();
+            Rigidbody2D    = GetComponent<Rigidbody2D>();
+            SpriteRenderer = GetComponent<SpriteRenderer>();
+            
             m_UnboundedSpace.Register(this);
         }
         private void OnDestroy() => m_UnboundedSpace.Unregister(this);

@@ -4898,7 +4898,7 @@ MonoBehaviour:
     m_Acceleration: 1000
     m_RotationSpeed: 120
     m_LinearDrag: 1.5
-    m_AngularDrag: 1.5
+    m_AngularDrag: 4
 --- !u!114 &3147170682732195304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4940,6 +4940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cdf5e765294371a5b29b1a6b387234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SpriteRenderer: {fileID: 4471722722436494311}
   m_ThrusterParticles: {fileID: 5288807185561090451}
 --- !u!212 &4471722722436494311
 SpriteRenderer:

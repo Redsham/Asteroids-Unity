@@ -10,18 +10,25 @@ namespace Gameplay.Asteroids
 {
     public class AsteroidsManager : MonoBehaviour
     {
-        [SerializeField] private AsteroidBehaviour m_Prefab;
+        #region Fields
+
+        [SerializeField] private AsteroidBehaviour     m_Prefab;
         [SerializeField] private AsteroidDestroyEffect m_DestroyEffect;
         
         private IObjectPool<AsteroidBehaviour>     m_AsteroidsPool;
         private IObjectPool<AsteroidDestroyEffect> m_DestroyEffectPool;
         
-        private readonly          List<AsteroidBehaviour>       m_Asteroids = new();
-        [Inject] private readonly UnboundedSpaceManager         m_UnboundedSpace;
-        
-        
+        private readonly          List<AsteroidBehaviour> m_Asteroids = new();
+        [Inject] private readonly UnboundedSpaceManager   m_UnboundedSpace;
+
+        #endregion
+
+        #region Events
+
         public event Action<AsteroidBehaviour> OnAsteroidDestroyed = delegate { };
         public event Action                    OnAsteroidsCleared  = delegate { };
+
+        #endregion
 
 
         private void Awake()

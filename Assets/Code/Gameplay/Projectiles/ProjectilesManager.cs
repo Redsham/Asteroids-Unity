@@ -25,23 +25,30 @@ namespace Gameplay.Projectiles
         
         public Projectile Spawn(Vector2 position, Vector2 velocity, float lifetime = 2.0f, IProjectileCollision ignoreCollision = null)
         {
+            // Get projectile from pool
             Projectile projectile = m_ProjectilesPool.Get();
 
+            // Set projectile properties
             projectile.Lifetime        = lifetime;
             projectile.Velocity        = velocity;
             projectile.Position        = position;
             projectile.IgnoreCollision = ignoreCollision;
             
+            // Set projectile events
             projectile.OnCollision        += _ => Despawn(projectile);
             projectile.OnLifetimeEnd      += () => Despawn(projectile);
             
+            // Register projectile in unbounded space
             m_UnboundedSpace.Register(projectile);
             
             return projectile;
         }
         public void Despawn(Projectile projectile)
         {
+            // Despawn projectile
             projectile.Despawn();
+            
+            // Unregister projectile
             m_UnboundedSpace.Unregister(projectile);
             m_ProjectilesPool.Release(projectile);
         }
