@@ -15,7 +15,7 @@ namespace Gameplay.Player
         [Inject] private PlayerMovement m_Movement;
         [Inject] private PlayerGunner   m_Gunner;
         
-        [Inject] private IAudioManager  m_AudioManager;
+        [Inject] private IUniAudioManager  m_AudioManager;
         
         
         [Inject]

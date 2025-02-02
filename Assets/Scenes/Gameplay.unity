@@ -651,7 +651,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 457185173}
-  m_IsMobile: 1
+  m_IsMobile: 0
 --- !u!4 &1603286894
 Transform:
   m_ObjectHideFlags: 0

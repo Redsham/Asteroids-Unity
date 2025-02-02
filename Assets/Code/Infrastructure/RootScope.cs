@@ -16,7 +16,7 @@ namespace Infrastructure
             builder.RegisterInstance(m_InputActionAsset);
             
             // Register AudioManager
-            builder.RegisterEntryPoint<AudioManager>().As<IAudioManager>();
+            builder.RegisterEntryPoint<UniAudioManager>().As<IUniAudioManager>();
         }
     }
 }

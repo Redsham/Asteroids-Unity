@@ -86,17 +86,17 @@ namespace Gameplay.Asteroids
                 
                 // Calculate child level
                 int childLevel = asteroid.Level - 1;
+                Vector2 childVelocity = Vector2.Perpendicular(asteroid.Velocity);
+                Vector2 parentVelocity = asteroid.Velocity;
                 
                 // Despawn asteroid
                 Despawn(asteroid);
 
                 // Spawn smaller asteroids
                 if (asteroid.Level <= 0) return;
-                for (int i = 0; i < 2; i++)
-                {
-                    Vector2 childVelocity = Random.insideUnitCircle.normalized * Random.Range(1.0f, 3.0f);
-                    Spawn(asteroid.Position, childVelocity, childLevel);
-                }
+                
+                Spawn(asteroid.Position, childVelocity + parentVelocity, childLevel);            
+                Spawn(asteroid.Position, -childVelocity + parentVelocity, childLevel);            
             };
             
             // Register asteroid

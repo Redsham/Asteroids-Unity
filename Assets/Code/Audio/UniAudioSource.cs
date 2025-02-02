@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Audio
 {
-    public abstract class UniAudioSource<T> : MonoBehaviour where T : AudioAsset
+    public abstract class UniAudioSource<T> : MonoBehaviour where T : UniAudioAsset
     {
         public T Asset
         {

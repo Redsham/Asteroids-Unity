@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 namespace Audio
 {
-    public class AudioManager : IAudioManager, IInitializable, IDisposable
+    public class UniAudioManager : IUniAudioManager, IInitializable, IDisposable
     {
         private GameObject              m_Root;
         
@@ -58,7 +58,7 @@ namespace Audio
             Object.Destroy(m_Root);
         }
 
-        public void Play(AudioAsset asset)
+        public void Play(UniAudioAsset asset)
         {
             switch (asset)
             {

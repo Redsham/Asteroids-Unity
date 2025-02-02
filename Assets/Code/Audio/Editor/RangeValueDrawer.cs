@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Audio.Editor
 {
     [CustomPropertyDrawer(typeof(RangeValue))]
-    public class RangeValuePropertyDrawer : PropertyDrawer
+    public class RangeValueDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

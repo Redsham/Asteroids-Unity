@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Audio
 {
-    public interface IAudioManager
+    public interface IUniAudioManager
     {
-        void Play(AudioAsset       asset);
+        void Play(UniAudioAsset       asset);
         void PlaySfx(SfxAudioAsset asset, Vector2 position);
     }
 }
