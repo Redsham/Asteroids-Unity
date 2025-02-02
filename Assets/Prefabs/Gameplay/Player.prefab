@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3501954414691260771}
   - component: {fileID: 5288807185561090451}
   - component: {fileID: 6269980879929436769}
+  - component: {fileID: 3964761297875388240}
   m_Layer: 0
   m_Name: Thruster-Effect
   m_TagString: Untagged
@@ -4842,6 +4843,22 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3964761297875388240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189215799407528122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3e4f4f4b26460aaa5f3e7e9011e604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: 11400000, guid: 20aeaf0fd50ed5f48b3dfd0eb1110a00, type: 2}
+  InstanceVolume: 0
+  InstancePitch: 1
+  InstancePlayOnAwake: 1
 --- !u!1 &5235576272243924727
 GameObject:
   m_ObjectHideFlags: 0
@@ -4855,9 +4872,11 @@ GameObject:
   - component: {fileID: 3147170682732195304}
   - component: {fileID: 8283006355998665396}
   - component: {fileID: 4439852343811708866}
+  - component: {fileID: 825743665754625291}
   - component: {fileID: 4471722722436494311}
   - component: {fileID: 8702774122211782121}
   - component: {fileID: 1336147477859706762}
+  - component: {fileID: 8407557883901175857}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4942,6 +4961,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpriteRenderer: {fileID: 4471722722436494311}
   m_ThrusterParticles: {fileID: 5288807185561090451}
+--- !u!114 &825743665754625291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5235576272243924727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3e84345221468ba5daa99ee388411a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Thruster: {fileID: 3964761297875388240}
+  m_Shot: {fileID: 11400000, guid: 91940db3cc2928a4ab70e916877b1c21, type: 2}
 --- !u!212 &4471722722436494311
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5075,3 +5108,11 @@ PolygonCollider2D:
       - {x: 0.5019531, y: -0.6972656}
       - {x: 0.001953125, y: 0.6972656}
   m_UseDelaunayMesh: 0
+--- !u!81 &8407557883901175857
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5235576272243924727}
+  m_Enabled: 1

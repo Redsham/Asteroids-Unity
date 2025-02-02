@@ -1,32 +1,27 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VContainer;
 
 namespace Gameplay.Player
 {
-    [RequireComponent(typeof(PlayerMovement), typeof(PlayerBehaviour))]
     public class PlayerPresenter : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer m_SpriteRenderer;
         [SerializeField] private ParticleSystem m_ThrusterParticles;
 
-        private PlayerBehaviour m_Behaviour;
-        private PlayerMovement  m_Movement;
+        [Inject] private readonly PlayerBehaviour m_Behaviour;
+        [Inject] private readonly PlayerMovement  m_Movement;
 
         private ParticleSystem.EmissionModule m_ThrusterEmission;
-        
-        private float m_ThrusterEmissionRate;
+        private float                         m_ThrusterEmissionRate;
 
         
-        private void Awake()
+        [Inject]
+        public void Construct()
         {
-            m_Behaviour = GetComponent<PlayerBehaviour>();
-            m_Movement  = GetComponent<PlayerMovement>();
-            
             m_ThrusterEmission = m_ThrusterParticles.emission;
             m_ThrusterEmissionRate = m_ThrusterEmission.rateOverTime.constant;
-        }
-        private void Start()
-        {
+            
             m_Behaviour.OnInvulnerabilityChanged += isInvulnerable =>
             {
                 if(!isInvulnerable)

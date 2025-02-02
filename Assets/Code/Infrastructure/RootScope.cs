@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -13,6 +14,9 @@ namespace Infrastructure
         {
             // Register the InputActionAsset instance to the container
             builder.RegisterInstance(m_InputActionAsset);
+            
+            // Register AudioManager
+            builder.RegisterEntryPoint<AudioManager>().As<IAudioManager>();
         }
     }
 }

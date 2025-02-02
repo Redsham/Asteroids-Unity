@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3372836577731906064}
   - component: {fileID: 4794919150251499746}
   - component: {fileID: 1053950237641544385}
+  - component: {fileID: 7722186453074432089}
   m_Layer: 0
   m_Name: AsteroidDestry-Effect
   m_TagString: Untagged
@@ -4905,6 +4906,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407ff9d130a24340b9c43b5a7ff9d31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7722186453074432089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187817442065399187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3e4f4f4b26460aaa5f3e7e9011e604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: 11400000, guid: 9acee2762053f9b40962d631d2a06e9c, type: 2}
+  InstanceVolume: 1
+  InstancePitch: 1
 --- !u!1 &6784437488237240109
 GameObject:
   m_ObjectHideFlags: 0

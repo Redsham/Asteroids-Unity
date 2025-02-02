@@ -4,6 +4,7 @@ using Gameplay.UnboundedSpace;
 using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
+using VContainer.Unity;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Asteroids
@@ -19,7 +20,9 @@ namespace Gameplay.Asteroids
         private IObjectPool<AsteroidDestroyEffect> m_DestroyEffectPool;
         
         private readonly          List<AsteroidBehaviour> m_Asteroids = new();
-        [Inject] private readonly UnboundedSpaceManager   m_UnboundedSpace;
+        
+        [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
+        [Inject] private readonly IObjectResolver       m_ObjectResolver;
 
         #endregion
 
@@ -40,11 +43,10 @@ namespace Gameplay.Asteroids
             instance => Destroy(instance.gameObject));
             
             m_DestroyEffectPool = new ObjectPool<AsteroidDestroyEffect>(
-                () =>
-                {
-                    AsteroidDestroyEffect instance = Instantiate(m_DestroyEffect, transform);
+                () => {
+                    AsteroidDestroyEffect instance = m_ObjectResolver.Instantiate(m_DestroyEffect, transform);
                     instance.Initialize(m_DestroyEffectPool);
-                    return instance;
+                    return instance; 
                 },
             instance => instance.gameObject.SetActive(true),
             instance => instance.gameObject.SetActive(false),

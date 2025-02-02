@@ -18,6 +18,8 @@ namespace Gameplay.Player
         
         [Inject] private ProjectilesManager m_ProjectilesManager;
 
+        public event System.Action<Projectile> OnFire = delegate { };
+
 
         private void Awake()
         {
@@ -33,6 +35,7 @@ namespace Gameplay.Player
             
             Fire();
         }
+        
         private bool CanFire() => m_Cooldown <= 0.0f && m_ProjectilesCount < m_Configuration.MaxProjectiles;
         private void Fire()
         {
@@ -49,6 +52,8 @@ namespace Gameplay.Player
             
             Projectile projectile = m_ProjectilesManager.Spawn(transform.position, velocity, lifetime, m_Collision);
             projectile.OnDespawn += () => m_ProjectilesCount--;
+            
+            OnFire.Invoke(projectile);
         }
     }
 }

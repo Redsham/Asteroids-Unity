@@ -24,9 +24,12 @@ namespace Infrastructure
             builder.RegisterComponentInHierarchy<AsteroidsManager>();
             
             // Register player
-            builder.RegisterComponentInHierarchy<PlayerMovement>();
-            builder.RegisterComponentInHierarchy<PlayerGunner>();
-            builder.RegisterComponentInHierarchy<PlayerBehaviour>();
+            builder.UseComponents(components =>
+            {
+                components.AddInHierarchy<PlayerMovement>();
+                components.AddInHierarchy<PlayerGunner>();
+                components.AddInHierarchy<PlayerBehaviour>();
+            });
             
             // Register player input
             if (m_IsMobile)
