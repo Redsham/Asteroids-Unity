@@ -1,4 +1,5 @@
 using Gameplay.Asteroids;
+using Gameplay.Managers;
 using Gameplay.Player;
 using Gameplay.Player.Inputs;
 using Gameplay.Projectiles;
@@ -36,6 +37,9 @@ namespace Infrastructure
                 builder.RegisterEntryPoint<MobileInput>().As<Input>();
             else
                 builder.RegisterEntryPoint<DesktopInput>().As<Input>();
+            
+            // Register managers
+            builder.RegisterEntryPoint<ScoreManager>().AsSelf();
         }
     }
 }

@@ -18,6 +18,9 @@ namespace Audio.Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Clip"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Volume"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Pitch"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Loop"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("m_PlayOnAwake"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("m_PlayOnManager"));
 
             if (m_Target is WorldAudioAsset worldAudioAsset)
             {

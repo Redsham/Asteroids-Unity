@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2562d3ba7d4e07a766d6c365fab675, type: 3}
   m_Name: AsteroidExplosion
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: c5ecb15560fd7594bb7d9db05d85391b, type: 3}
   m_Loop: 0
   m_PlayOnAwake: 1
+  m_Clip: {fileID: 8300000, guid: 1f43188e8d1c9e844b3fe90f8808f898, type: 3}
   m_Volume:
     m_Min: 0.3
     m_Max: 0.6

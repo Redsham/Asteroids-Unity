@@ -26,6 +26,8 @@ namespace UI.Gameplay
                 return;
             }
             
+            gameObject.SetActive(true);
+            
             m_DirectionJoystick.OnValueChanged.AddListener(HandleDirectionJoystick);
             m_ThrustButton.OnHold.AddListener(mobileInput.SetThrust);
             m_FireButton.OnHold.AddListener(mobileInput.SetFire);

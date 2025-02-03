@@ -19,10 +19,11 @@ namespace Audio.Sources
             ApplyVolumeAndPitch();
         }
 
-        public override void Play()
+        protected override void PlaySelf()
         {
             ApplyVolumeAndPitch();
             AudioSource.Play();
         }
+        protected override void PlayOnManager() => IUniAudioManager.Active.Play(Asset);
     }
 }

@@ -15,10 +15,10 @@ namespace Gameplay.Player
             {
                 if (m_Lives == value)
                     return;
-                
-                OnLivesChanged(value, m_Lives);
+
                 m_Lives = value;
-                
+                OnLivesChanged(value);
+
                 if (m_Lives <= 0)
                     OnDeath();
             }
@@ -37,7 +37,7 @@ namespace Gameplay.Player
         
         public bool IsAlive      => Lives > 0;
 
-        private int  m_Lives = 4;
+        private int  m_Lives = 3;
         private bool m_Invulnerable;
 
         #region Events
@@ -49,7 +49,7 @@ namespace Gameplay.Player
         /// <summary>
         /// Invokes when player's lives count changes (new value, old value).
         /// </summary>
-        public event Action<int, int> OnLivesChanged           = delegate { };
+        public event Action<int> OnLivesChanged           = delegate { };
         /// <summary>
         /// Invokes when player dies.
         /// </summary>

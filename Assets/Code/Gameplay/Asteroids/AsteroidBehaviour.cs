@@ -23,7 +23,7 @@ namespace Gameplay.Asteroids
             set => m_Rigidbody.linearVelocity = value;
         }
         
-        public Bounds2D Bounds  => Bounds2D.FromPoint(Position, 2.0f);
+        public Bounds2D Bounds  => Bounds2D.FromBounds(m_PolygonCollider.bounds);
         
         private Rigidbody2D       m_Rigidbody;
         private LineRenderer      m_LineRenderer;

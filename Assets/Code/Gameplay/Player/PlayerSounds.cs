@@ -33,6 +33,6 @@ namespace Gameplay.Player
             m_Thruster.Pitch = m_Thruster.Volume = Mathf.Lerp(m_Thruster.Volume, m_Movement.LinearThrust, Time.deltaTime * 5.0f);
         }
 
-        private void OnFire(Projectile projectile) => m_AudioManager.PlaySfx(m_Shot, m_Gunner.transform.position);
+        private void OnFire(Projectile projectile) => m_AudioManager.PlayWorld(m_Shot, m_Gunner.transform.position);
     }
 }

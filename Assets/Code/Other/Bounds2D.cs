@@ -64,5 +64,7 @@ namespace Other
         public static Bounds2D FromPoint(Vector2         point)               => new(point, point);
         public static Bounds2D FromPoint(Vector2         point, float radius) => new(point - new Vector2(radius, radius), point + new Vector2(radius, radius));
         public static Bounds2D FromSprite(SpriteRenderer spriteRenderer) => new(spriteRenderer.bounds.min, spriteRenderer.bounds.max);
+
+        public static Bounds2D FromBounds(Bounds bounds) => new(bounds.min, bounds.max);
     }
 }

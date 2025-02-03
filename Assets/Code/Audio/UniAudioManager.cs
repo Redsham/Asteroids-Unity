@@ -10,11 +10,19 @@ namespace Audio
 {
     public class UniAudioManager : IUniAudioManager, IInitializable, IDisposable
     {
+        private UniAudioManager()
+        {
+            if (IUniAudioManager.Active != null)
+                throw new InvalidOperationException("UniAudioManager is already initialized.");
+            
+            IUniAudioManager.Active = this;
+        }
+        
+        
         private GameObject              m_Root;
         
         private ObjectPool<AudioSource> m_InterfacePool;
         private ObjectPool<AudioSource> m_SfxPool;
-        
         
         public void Initialize()
         {
@@ -30,11 +38,10 @@ namespace Audio
                 audioSource.loop                  = false;
                 audioSource.spatialize            = false;
                 audioSource.spatialBlend          = 0.0f;
-                audioSource.volume                = 1.0f;
+                
                 audioSource.bypassEffects         = true;
                 audioSource.bypassListenerEffects = true;
                 audioSource.bypassReverbZones     = true;
-                audioSource.priority              = 0;
                 
                 return audioSource;
             });
@@ -46,7 +53,6 @@ namespace Audio
 
                 audioSource.playOnAwake  = false;
                 audioSource.loop         = false;
-                audioSource.spatialBlend = 1.0f;
                 audioSource.rolloffMode  = AudioRolloffMode.Linear;
                 
                 return audioSource;
@@ -54,6 +60,8 @@ namespace Audio
         }
         public void Dispose()
         {
+            IUniAudioManager.Active = null;
+            
             m_InterfacePool.Dispose();
             Object.Destroy(m_Root);
         }
@@ -66,22 +74,26 @@ namespace Audio
                     PlayUIInternal(interfaceAudioAsset).Forget();
                     break;
                 case SfxAudioAsset sfxAudioAsset:
-                    PlaySfxInternal(sfxAudioAsset, Vector2.zero).Forget();
+                    PlayWorldInternal(sfxAudioAsset, Vector2.zero).Forget();
                     break;
             }
         }
-        public void PlaySfx(SfxAudioAsset asset, Vector2 position) => PlaySfxInternal(asset, position).Forget();
+        public void PlayWorld(WorldAudioAsset asset, Vector2 position) => PlayWorldInternal(asset, position).Forget();
         
         private async UniTaskVoid PlayUIInternal(InterfaceAudioAsset asset)
         {
             AudioSource audioSource = m_InterfacePool.Get();
-            audioSource.PlayOneShot(asset.Clip);
+            
+            audioSource.clip = asset.Clip;
+            audioSource.volume = asset.Volume;
+            audioSource.pitch  = asset.Pitch;
+            audioSource.Play();
             
             await UniTask.WaitForSeconds(asset.Clip.length);
             
             m_InterfacePool.Release(audioSource);
         }
-        private async UniTaskVoid PlaySfxInternal(SfxAudioAsset asset, Vector2 position)
+        private async UniTaskVoid PlayWorldInternal(WorldAudioAsset asset, Vector2 position)
         {
             AudioSource audioSource = m_SfxPool.Get();
             audioSource.transform.position = position;

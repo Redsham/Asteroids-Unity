@@ -61,6 +61,7 @@ namespace Gameplay.Asteroids
                 Spawn(position, velocity, 2);
             }
         }
+        private void OnDestroy() => m_AsteroidsPool.Clear();
 
         public void Spawn(Vector2 position, Vector2 velocity, int level)
         {

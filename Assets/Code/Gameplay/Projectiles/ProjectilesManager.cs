@@ -22,7 +22,8 @@ namespace Gameplay.Projectiles
             instance => instance.gameObject.SetActive(false),
             x => Destroy(x.gameObject));
         }
-        
+        private void OnDestroy() => m_ProjectilesPool.Clear();
+
         public Projectile Spawn(Vector2 position, Vector2 velocity, float lifetime = 2.0f, IProjectileCollision ignoreCollision = null)
         {
             // Get projectile from pool

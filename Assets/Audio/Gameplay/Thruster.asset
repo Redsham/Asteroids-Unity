@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2562d3ba7d4e07a766d6c365fab675, type: 3}
   m_Name: Thruster
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: c497afea2b9e17a4ebeff29b7bb295bc, type: 3}
   m_Loop: 1
   m_PlayOnAwake: 1
+  m_PlayOnManager: 0
+  m_Clip: {fileID: 8300000, guid: c497afea2b9e17a4ebeff29b7bb295bc, type: 3}
   m_Volume:
     m_Min: 0.1
     m_Max: 1

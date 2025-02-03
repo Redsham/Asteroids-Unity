@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Audio
@@ -36,15 +35,18 @@ namespace Audio
         
         [SerializeField] private T m_Asset;
 
-        [SerializeField] protected float InstanceVolume      = 1.0f;
-        [SerializeField] protected float InstancePitch       = 1.0f;
-        [SerializeField] protected bool  InstancePlayOnAwake = true;
+        [SerializeField] protected float InstanceVolume        = 1.0f;
+        [SerializeField] protected float InstancePitch         = 1.0f;
+        [SerializeField] protected bool  InstancePlayOnAwake   = true;
 
         protected AudioSource AudioSource { get; private set; }
 
         
         private void Awake()
         {
+            if(m_Asset.PlayOnManager)
+                return;
+            
             AudioSource = gameObject.AddComponent<AudioSource>();
             Setup(AudioSource);
         }
@@ -63,6 +65,9 @@ namespace Audio
         
         protected void ApplyVolumeAndPitch()
         {
+            if(m_Asset.PlayOnManager)
+                return;
+            
             AudioSource.volume = m_Asset.Volume * Volume;
             AudioSource.pitch  = m_Asset.Pitch * Pitch;
         }
@@ -74,6 +79,15 @@ namespace Audio
             audioSource.loop         = m_Asset.Loop;
             audioSource.rolloffMode  = AudioRolloffMode.Linear;
         }
-        public abstract    void Play();
+        
+        public void Play()
+        {
+            if (m_Asset.PlayOnManager)
+                PlayOnManager();
+            else
+                PlaySelf();
+        }
+        protected abstract void PlaySelf();
+        protected abstract void PlayOnManager();
     }
 }
