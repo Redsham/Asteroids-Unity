@@ -22,7 +22,6 @@ namespace Gameplay.Asteroids
         private readonly          List<AsteroidBehaviour> m_Asteroids = new();
         
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
-        [Inject] private readonly IObjectResolver       m_ObjectResolver;
 
         #endregion
 
@@ -44,7 +43,7 @@ namespace Gameplay.Asteroids
             
             m_DestroyEffectPool = new ObjectPool<AsteroidDestroyEffect>(
                 () => {
-                    AsteroidDestroyEffect instance = m_ObjectResolver.Instantiate(m_DestroyEffect, transform);
+                    AsteroidDestroyEffect instance = Instantiate(m_DestroyEffect, transform);
                     instance.Initialize(m_DestroyEffectPool);
                     return instance; 
                 },
@@ -69,7 +68,7 @@ namespace Gameplay.Asteroids
             AsteroidBehaviour asteroid = m_AsteroidsPool.Get();
             
             // Initialize asteroid
-            asteroid.Initialize(level);
+            asteroid.OnSpawn(level);
             
             // Initialize asteroid
             asteroid.Velocity = velocity;
@@ -106,7 +105,7 @@ namespace Gameplay.Asteroids
         }
         public void Despawn(AsteroidBehaviour asteroid)
         {
-            asteroid.Despawn();
+            asteroid.OnDespawn();
             
             m_UnboundedSpace.Unregister(asteroid);
             m_Asteroids.Remove(asteroid);

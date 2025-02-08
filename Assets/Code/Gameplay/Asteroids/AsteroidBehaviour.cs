@@ -30,7 +30,14 @@ namespace Gameplay.Asteroids
         private PolygonCollider2D m_PolygonCollider;
 
         public event Action OnDestroy = delegate { };
+        
 
+        private void Awake()
+        {
+            m_LineRenderer    = GetComponent<LineRenderer>();
+            m_PolygonCollider = GetComponent<PolygonCollider2D>();
+            m_Rigidbody       = GetComponent<Rigidbody2D>();
+        }
         
         #region Collision
 
@@ -45,14 +52,8 @@ namespace Gameplay.Asteroids
         }
 
         #endregion
-
-        private void Awake()
-        {
-            m_LineRenderer    = GetComponent<LineRenderer>();
-            m_PolygonCollider = GetComponent<PolygonCollider2D>();
-            m_Rigidbody       = GetComponent<Rigidbody2D>();
-        }
-        public void Initialize(int level)
+        
+        public void OnSpawn(int level)
         {
             if(level < 0)
                 Debug.LogError("Asteroid level cannot be less than 0");
@@ -70,7 +71,7 @@ namespace Gameplay.Asteroids
             
             Level = level;
         }
-        public void Despawn()
+        public void OnDespawn()
         {
             OnDestroy                   = delegate { }; // Clear all subscribers
             m_Rigidbody.linearVelocity  = Vector2.zero; // Reset velocity

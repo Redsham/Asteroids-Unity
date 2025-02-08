@@ -30,7 +30,11 @@ namespace UI.Gameplay
             m_AddedScoreText.gameObject.SetActive(false);
             UpdateText();
         }
-        private void OnDestroy() => m_ScoreManager.OnScoreChanged -= OnScoreChanged;
+        private void OnDestroy()
+        {
+            if(m_ScoreManager != null)
+                m_ScoreManager.OnScoreChanged -= OnScoreChanged;
+        }
 
         private void OnScoreChanged(uint score)
         {
