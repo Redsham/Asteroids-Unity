@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd2562d3ba7d4e07a766d6c365fab675, type: 3}
-  m_Name: AsteroidExplosion
+  m_Name: Death
   m_EditorClassIdentifier: 
   m_Loop: 0
-  m_PlayOnAwake: 1
-  m_Clip: {fileID: 8300000, guid: 1f43188e8d1c9e844b3fe90f8808f898, type: 3}
+  m_PlayOnAwake: 0
+  m_PlayOnManager: 1
+  m_Clip: {fileID: 8300000, guid: 4a46445658c5a114facd0139b29fb81d, type: 3}
   m_Volume:
-    m_Min: 0.3
-    m_Max: 0.6
-    m_UseRandom: 1
+    m_Min: 1
+    m_Max: 1
+    m_UseRandom: 0
   m_Pitch:
-    m_Min: 0.8
-    m_Max: 1.2
-    m_UseRandom: 1
-  m_SpatialBlend: 1
+    m_Min: 1
+    m_Max: 1
+    m_UseRandom: 0
+  m_SpatialBlend: 0
   m_Distance:
     m_Min: 5
     m_Max: 30

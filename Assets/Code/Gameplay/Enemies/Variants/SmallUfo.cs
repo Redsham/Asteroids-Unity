@@ -5,7 +5,9 @@ namespace Gameplay.Enemies.Variants
 {
     public class SmallUfo : UfoBehaviour
     {
-        public override int Score => 1000;
+        #region Fields
+
+        public override uint Score => 1000;
 
         [Header("Other")]
         [SerializeField] private float m_StopDistance = 5.0f;
@@ -13,8 +15,10 @@ namespace Gameplay.Enemies.Variants
         private readonly PIDController m_PID_Horizontal = new();
         private readonly PIDController m_PID_Vertical   = new();
         private          float         m_Cooldown;
-        
-        
+
+        #endregion
+
+
         private void FixedUpdate()
         {
             TickMovement();

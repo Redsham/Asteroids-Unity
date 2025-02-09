@@ -1,31 +1,28 @@
-using Audio;
 using Audio.Sources;
 using UnityEngine;
 using UnityEngine.Pool;
-using VContainer;
 
-namespace Gameplay.Asteroids
+namespace Gameplay.Enemies
 {
     [RequireComponent(typeof(ParticleSystem))]
-    internal class AsteroidDestroyEffect : MonoBehaviour
+    internal class EnemyDestroyEffect : MonoBehaviour
     {
-        private WorldAudioSource                   m_AudioSource;
-        private ParticleSystem                     m_ParticleSystem;
-        private IObjectPool<AsteroidDestroyEffect> m_Pool;
+        private WorldAudioSource              m_AudioSource;
+        private ParticleSystem                m_ParticleSystem;
+        private IObjectPool<EnemyDestroyEffect> m_Pool;
         
         
-        public void Initialize(IObjectPool<AsteroidDestroyEffect> pool)
+        public void Initialize(IObjectPool<EnemyDestroyEffect> pool)
         {
             m_AudioSource    = GetComponent<WorldAudioSource>();
             m_ParticleSystem = GetComponent<ParticleSystem>();
             m_Pool           = pool;
         }
         
-        public void Play(AsteroidBehaviour asteroid)
+        public void Play(EnemyBehaviour enemy)
         {
             // Play particle system
-            transform.position   = asteroid.Position;
-            transform.localScale = Vector3.one * ((float)asteroid.Level + 1.0f);
+            transform.position   = enemy.Position;
             m_ParticleSystem.Play();
             
             // Play sound

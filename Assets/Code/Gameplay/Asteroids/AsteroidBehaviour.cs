@@ -10,7 +10,7 @@ namespace Gameplay.Asteroids
     [RequireComponent(typeof(LineRenderer), typeof(PolygonCollider2D), typeof(Rigidbody2D))]
     public class AsteroidBehaviour : MonoBehaviour, IUnboundedSpaceTransform, IProjectileCollision
     {
-        public int  Level   { get; private set; }
+        public AsteroidLevel  Level   { get; private set; }
         public ProjectileLayer ProjectileLayer => ProjectileLayer.Asteroid;
         
         public Vector2 Position
@@ -54,13 +54,13 @@ namespace Gameplay.Asteroids
 
         #endregion
         
-        public void OnSpawn(int level)
+        public void OnSpawn(AsteroidLevel level)
         {
             if(level < 0)
                 Debug.LogError("Asteroid level cannot be less than 0");
             
             // Generate asteroid vertices
-            Vector2[] vertices = AsteroidsGenerator.GenerateAsteroidVertices(1.0f + level);
+            Vector2[] vertices = AsteroidsGenerator.GenerateAsteroidVertices(1.0f + (float)level);
             
             // Set line renderer positions
             m_LineRenderer.positionCount = vertices.Length;

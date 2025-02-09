@@ -11,10 +11,15 @@ namespace Gameplay.Enemies
     {
         #region Fields
 
-        [SerializeField] private EnemyBehaviour[] m_Prefabs;
+        public IReadOnlyList<EnemyBehaviour> Enemies => m_Enemies;
+        public int Count => m_Enemies.Count;
         
+        [SerializeField] private EnemyBehaviour[] m_Prefabs;
         private readonly Dictionary<Type, IObjectPool<EnemyBehaviour>> m_Pools   = new();
         private readonly List<EnemyBehaviour>                          m_Enemies = new();
+        
+        [SerializeField] private EnemyDestroyEffect m_DestroyEffect;
+        private IObjectPool<EnemyDestroyEffect> m_DestroyEffectPool;
         
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
         [Inject] private readonly IObjectResolver       m_ObjectResolver;
@@ -28,8 +33,23 @@ namespace Gameplay.Enemies
 
         #endregion
 
-        
-        private void OnDestroy() => m_Enemies.Clear();
+        private void Awake()
+        {
+            m_DestroyEffectPool = new ObjectPool<EnemyDestroyEffect>(
+                () => {
+                    EnemyDestroyEffect instance = Instantiate(m_DestroyEffect, transform);
+                    instance.Initialize(m_DestroyEffectPool);
+                    return instance; 
+                },
+                instance => instance.gameObject.SetActive(true),
+                instance => instance.gameObject.SetActive(false),
+                instance => Destroy(instance.gameObject));
+        }
+        private void OnDestroy()
+        {
+            m_Enemies.Clear();
+            m_DestroyEffectPool.Clear();
+        }
 
         public EnemyBehaviour GetFromPool(Type type)
         {
@@ -79,6 +99,10 @@ namespace Gameplay.Enemies
                 if (m_Enemies.Count == 0)
                     OnEnemiesCleared.Invoke();
                 
+                // Play destroy effect
+                EnemyDestroyEffect effect = m_DestroyEffectPool.Get();
+                effect.Play(enemy);
+                
                 // Despawn enemy
                 Despawn(enemy);
             };
@@ -95,6 +119,16 @@ namespace Gameplay.Enemies
             m_Enemies.Remove(enemy);
             
             ReleaseToPool(enemy);
+        }
+
+        public void Clear()
+        {
+            foreach (EnemyBehaviour enemy in m_Enemies)
+            {
+                enemy.OnDespawn();
+                m_UnboundedSpace.Unregister(enemy);
+                ReleaseToPool(enemy);
+            }
         }
     }
 }

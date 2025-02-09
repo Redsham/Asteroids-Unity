@@ -1,5 +1,6 @@
 using System;
 using Gameplay.Asteroids;
+using Gameplay.Enemies;
 using VContainer;
 using VContainer.Unity;
 
@@ -7,6 +8,8 @@ namespace Managers
 {
     public class ScoreManager : IInitializable, IDisposable
     {
+        #region Fields
+
         public uint Score
         {
             get => m_Score;
@@ -18,34 +21,40 @@ namespace Managers
         }
         private uint m_Score;
         
-        [Inject] private readonly AsteroidsManager m_AsteroidsManager;
-        
-        public event System.Action<uint> OnScoreChanged;
+        [Inject] private readonly AsteroidsManager m_Asteroids;
+        [Inject] private readonly EnemiesManager   m_Enemies;
+
+        #endregion
+
+        public event Action<uint> OnScoreChanged;
         
         
         public void Initialize()
         {
-            m_AsteroidsManager.OnAsteroidDestroyed += OnAsteroidsManagerOnOnAsteroidDestroyed;
+            m_Asteroids.OnAsteroidDestroyed += OnAsteroidDestroyed;
+            m_Enemies.OnEnemyDestroyed      += OnEnemyDestroyed;
         }
         public void Dispose()
         {
-            m_AsteroidsManager.OnAsteroidDestroyed -= OnAsteroidsManagerOnOnAsteroidDestroyed;
+            m_Asteroids.OnAsteroidDestroyed -= OnAsteroidDestroyed;
+            m_Enemies.OnEnemyDestroyed      -= OnEnemyDestroyed;
         }
 
-        private void OnAsteroidsManagerOnOnAsteroidDestroyed(AsteroidBehaviour asteroid)
+        private void OnAsteroidDestroyed(AsteroidBehaviour asteroid)
         {
             switch (asteroid.Level)
             {
-                case 0:
+                case AsteroidLevel.Small:
                     Score += 100;
                     break;
-                case 1:
+                case AsteroidLevel.Medium:
                     Score += 50;
                     break;
-                case 2:
+                case AsteroidLevel.Large:
                     Score += 20;
                     break;
             }
         }
+        private void OnEnemyDestroyed(EnemyBehaviour enemy) => Score += enemy.Score;
     }
 }

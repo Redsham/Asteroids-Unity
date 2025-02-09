@@ -1,8 +1,6 @@
-using Gameplay.Asteroids;
-using Gameplay.Enemies;
-using Gameplay.Enemies.Variants;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Gameplay.Player;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,15 +8,30 @@ namespace Managers
 {
     public class GameManager : IStartable
     {
-        [Inject] private readonly PlayerBehaviour  m_PlayerBehaviour;
+        [Inject] private PlayerBehaviour m_Player;
+        [Inject] private WavesManager    m_WavesManager;
         
-        [Inject] private readonly AsteroidsManager m_Asteroids;
-        [Inject] private readonly EnemiesManager   m_Enemies;
+        private CancellationTokenSource m_WaveTokenSource;
         
         public void Start()
         {
-            m_Enemies.Spawn(typeof(SmallUfo), Vector2.left * 10.0f, m_PlayerBehaviour);
-            m_Enemies.Spawn(typeof(BigUfo), Vector2.right * 10.0f, m_PlayerBehaviour);
+            m_Player.OnDeath += OnPlayerDeath;
+            GameLoop().Forget();
+        }
+        
+        private async UniTask GameLoop()
+        {
+            while (m_Player.IsAlive)
+            {
+                m_WaveTokenSource = new CancellationTokenSource();
+                await m_WavesManager.StartWave(m_WaveTokenSource.Token);
+            }
+
+            m_WavesManager.ClearWave();
+        }
+        private void OnPlayerDeath()
+        {
+            m_WaveTokenSource?.Cancel();
         }
     }
 }

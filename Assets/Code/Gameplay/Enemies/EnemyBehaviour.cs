@@ -13,7 +13,7 @@ namespace Gameplay.Enemies
 
         public IEnemyTarget    Target          { get; private set; }
         public ProjectileLayer ProjectileLayer => ProjectileLayer.Enemy;
-        public abstract int   Score           { get; }
+        public abstract uint   Score           { get; }
         
         public Vector2 Position
         {

@@ -4,20 +4,28 @@ namespace Gameplay.Enemies.Variants
 {
     public class BigUfo : UfoBehaviour
     {
-        public override int Score => 200;
+        #region Fields
+
+        public override uint Score => 200;
 
         [Header("Other")]
         [SerializeField] private float m_DirectionChangeCooldown = 1.0f;
         
         private Vector2 m_RandomDirection;
         private float   m_DirectionChangeTime;
-        
-        private float m_FireCooldown;
+        private float   m_FireCooldown;
+
+        #endregion
+
 
         private void FixedUpdate()
         {
             TickMovement();
             TickFire();
+        }
+        private void Update()
+        {
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, (Velocity / MaxSpeed).x * -35.0f);
         }
         
         private void TickMovement()
@@ -37,7 +45,7 @@ namespace Gameplay.Enemies.Variants
                 return;
             
             m_FireCooldown = 1.0f / FireRate;
-            Fire(GetPredictedShotDirection(out float time));
+            Fire(AddDeviationByRotation(GetPredictedShotDirection(out float time), 5.0f));
         }
     }
 }

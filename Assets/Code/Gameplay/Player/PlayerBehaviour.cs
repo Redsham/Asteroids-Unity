@@ -1,4 +1,5 @@
 using System;
+using Audio.Sources;
 using Cysharp.Threading.Tasks;
 using Gameplay.Asteroids;
 using Gameplay.Enemies;
@@ -9,6 +10,8 @@ namespace Gameplay.Player
 {
     public class PlayerBehaviour : MonoBehaviour, IProjectileCollision, IAsteroidCollision, IEnemyCollision, IEnemyTarget
     {
+        #region Fields
+
         public int Lives
         {
             get => m_Lives;
@@ -24,6 +27,9 @@ namespace Gameplay.Player
                     OnDeath();
             }
         }
+        public bool IsAlive      => Lives > 0;
+        private int  m_Lives = 3;
+        
         public bool Invulnerable
         {
             get => m_Invulnerable;
@@ -35,16 +41,12 @@ namespace Gameplay.Player
                 OnInvulnerabilityChanged(value);
             }
         }
+        private bool m_Invulnerable;
 
         public Vector2 Position => Movement.Position;
         public Vector2 Velocity => Movement.Velocity;
         
         public ProjectileLayer ProjectileLayer => ProjectileLayer.Player;
-        
-        public bool IsAlive      => Lives > 0;
-
-        private int  m_Lives = 3;
-        private bool m_Invulnerable;
         
         #region Components
 
@@ -53,6 +55,10 @@ namespace Gameplay.Player
 
         #endregion
         
+        [SerializeField] private WorldAudioSource m_DeathSound;
+
+        #endregion
+
         #region Events
 
         /// <summary>
@@ -113,6 +119,7 @@ namespace Gameplay.Player
         private void TakeDamage()
         {
             Lives--;
+            m_DeathSound.Play();
             
             if (IsAlive)
                 GiveInvulnerability(2.0f);

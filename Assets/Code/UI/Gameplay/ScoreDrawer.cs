@@ -8,6 +8,8 @@ namespace UI.Gameplay
 {
     public class ScoreDrawer : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private TextMeshProUGUI m_MainText;
         [SerializeField] private TextMeshProUGUI m_AddedScoreText;
         
@@ -20,7 +22,9 @@ namespace UI.Gameplay
         
         private UniTask m_ScoreAnimation;
 
-        
+        #endregion
+
+
         [Inject]
         public void Construct()
         {
@@ -67,7 +71,7 @@ namespace UI.Gameplay
                 
                 UpdateText();
 
-                await UniTask.WaitForSeconds(0.01f);
+                await UniTask.WaitForSeconds(Mathf.Min(5.0f / m_AddedScore, 0.01f));
             }
 
             m_AddedScoreText.gameObject.SetActive(false);

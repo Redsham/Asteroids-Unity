@@ -45,6 +45,7 @@ namespace Infrastructure
             
             // Register managers
             builder.RegisterEntryPoint<ScoreManager>().AsSelf();
+            builder.RegisterEntryPoint<WavesManager>().AsSelf();
             builder.RegisterEntryPoint<GameManager>().AsSelf();
         }
     }
