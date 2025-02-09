@@ -9,17 +9,26 @@ namespace Gameplay.UnboundedSpace
         public Bounds2D Bounds { get; private set; }
         
         [SerializeField] private Camera                         m_Camera;
-        private readonly         List<IUnboundedSpaceTransform> m_Objects = new();
+        private readonly         List<IUnboundedSpaceTransform> m_Objects        = new();
+        private readonly         Stack<IUnboundedSpaceWrapped>  m_WrappedObjects = new();
         
         
         public void Register(IUnboundedSpaceTransform obj) => m_Objects.Add(obj);
         public void Unregister(IUnboundedSpaceTransform obj) => m_Objects.Remove(obj);
+        
+        public Vector2 ShortestPath(Vector2 start, Vector2 end)
+        {
+            float dx = Mathf.Repeat(end.x - start.x + Bounds.Width / 2, Bounds.Width) - Bounds.Width / 2;
+            float dy = Mathf.Repeat(end.y - start.y + Bounds.Height / 2, Bounds.Height) - Bounds.Height / 2;
+            return new Vector2(dx, dy);
+        }
 
         private void Awake() => Bounds = GetViewportBounds();
         private void FixedUpdate()
         {
             Bounds = GetViewportBounds();
             
+            m_WrappedObjects.Clear();
             foreach (IUnboundedSpaceTransform obj in m_Objects)
             {
                 Vector2 position = obj.Position;
@@ -37,7 +46,14 @@ namespace Gameplay.UnboundedSpace
                 
                 // Update the object's position
                 obj.Position = position;
+                
+                if(obj is IUnboundedSpaceWrapped wrapped)
+                    m_WrappedObjects.Push(wrapped);
             }
+            
+            // Notify wrapped objects
+            while (m_WrappedObjects.TryPop(out IUnboundedSpaceWrapped wrapped))
+                wrapped.OnSpaceWrapped();
         }
         private Bounds2D GetViewportBounds()
         {

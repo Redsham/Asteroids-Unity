@@ -11,6 +11,7 @@ namespace Gameplay.Asteroids
     public class AsteroidBehaviour : MonoBehaviour, IUnboundedSpaceTransform, IProjectileCollision
     {
         public int  Level   { get; private set; }
+        public ProjectileLayer ProjectileLayer => ProjectileLayer.Asteroid;
         
         public Vector2 Position
         {

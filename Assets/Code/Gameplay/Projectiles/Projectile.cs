@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gameplay.Projectiles
 {
-    public class Projectile : MonoBehaviour, IUnboundedSpaceTransform
+    public class Projectile : MonoBehaviour, IUnboundedSpaceTransform, IUnboundedSpaceWrapped
     {
         #region Fields
 
@@ -14,11 +14,11 @@ namespace Gameplay.Projectiles
             get => transform.position;
             set => transform.position = value;
         }
-        public Vector2              Velocity        { get; set; }
-        
-        public float                Lifetime        { get; set; }
-        public IProjectileCollision IgnoreCollision { get; set; }
-        
+        public Vector2         Velocity    { get; set; }
+        public float           Lifetime    { get; set; }
+        public ProjectileLayer IgnoreLayer { get; set; }
+        public bool            CanWrapping { get; set; }
+
         public Bounds2D Bounds  => Bounds2D.FromPoint(Position);
         
         #endregion
@@ -26,8 +26,8 @@ namespace Gameplay.Projectiles
         #region Events
 
         public event Action<ProjectileCollisionData> OnCollision   = delegate { };
-        public event Action                       OnLifetimeEnd = delegate { };
-        public event Action                       OnDespawn     = delegate { };
+        public event Action                          OnLifetimeEnd = delegate { };
+        public event Action                          OnDespawn     = delegate { };
         #endregion
         
         public void FixedUpdate()
@@ -56,13 +56,13 @@ namespace Gameplay.Projectiles
             if(Lifetime <= 0.0f)
                 OnLifetimeEnd.Invoke();
         }
-        
+
         private bool CheckCollision(ref Vector2 newPosition)
         {
             RaycastHit2D hit = Physics2D.Linecast(Position, newPosition);
             
             // Check if hit object has IProjectileCollision component and it's not the same as IgnoreCollision
-            if (!hit || !hit.collider.TryGetComponent(out IProjectileCollision collision) || collision == IgnoreCollision)
+            if (!hit || !hit.collider.TryGetComponent(out IProjectileCollision collision) || IgnoreLayer.HasFlag(collision.ProjectileLayer))
                 return false;
             
             // Set new position to hit point
@@ -77,7 +77,14 @@ namespace Gameplay.Projectiles
             
             return true;
         }
-        
+        public void OnSpaceWrapped()
+        {
+            if (CanWrapping)
+                return;
+            
+            OnLifetimeEnd.Invoke();
+        }
+
         public void Despawn()
         {
             OnDespawn.Invoke();           // Notify that projectile is despawned

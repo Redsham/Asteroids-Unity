@@ -1,12 +1,13 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Gameplay.Asteroids;
+using Gameplay.Enemies;
 using Gameplay.Projectiles;
 using UnityEngine;
 
 namespace Gameplay.Player
 {
-    public class PlayerBehaviour : MonoBehaviour, IProjectileCollision, IAsteroidCollision
+    public class PlayerBehaviour : MonoBehaviour, IProjectileCollision, IAsteroidCollision, IEnemyCollision, IEnemyTarget
     {
         public int Lives
         {
@@ -34,12 +35,24 @@ namespace Gameplay.Player
                 OnInvulnerabilityChanged(value);
             }
         }
+
+        public Vector2 Position => Movement.Position;
+        public Vector2 Velocity => Movement.Velocity;
+        
+        public ProjectileLayer ProjectileLayer => ProjectileLayer.Player;
         
         public bool IsAlive      => Lives > 0;
 
         private int  m_Lives = 3;
         private bool m_Invulnerable;
+        
+        #region Components
 
+        public PlayerMovement Movement { get; private set; }
+        public PlayerGunner   Shooting { get; private set; }
+
+        #endregion
+        
         #region Events
 
         /// <summary>
@@ -56,7 +69,17 @@ namespace Gameplay.Player
         public event Action           OnDeath                  = delegate { };
 
         #endregion
-        
+
+
+        #region Unity Methods
+
+        private void Awake()
+        {
+            Movement = GetComponentInChildren<PlayerMovement>();
+            Shooting = GetComponentInChildren<PlayerGunner>();
+        }
+
+        #endregion
         
         #region Collision
 
@@ -74,6 +97,13 @@ namespace Gameplay.Player
                 projectile.Ignore();
                 return;
             }
+            
+            TakeDamage();
+        }
+        public void OnEnemyCollision(EnemyBehaviour enemy)
+        {
+            if (Invulnerable)
+                return;
             
             TakeDamage();
         }

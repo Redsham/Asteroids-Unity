@@ -1,9 +1,10 @@
 using Gameplay.Asteroids;
-using Gameplay.Managers;
+using Gameplay.Enemies;
 using Gameplay.Player;
 using Gameplay.Player.Inputs;
 using Gameplay.Projectiles;
 using Gameplay.UnboundedSpace;
+using Managers;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -21,8 +22,12 @@ namespace Infrastructure
             builder.RegisterComponentInHierarchy<UnboundedSpaceManager>();
             
             // Register managers
-            builder.RegisterComponentInHierarchy<ProjectilesManager>();
-            builder.RegisterComponentInHierarchy<AsteroidsManager>();
+            builder.UseComponents(components =>
+            {
+                components.AddInHierarchy<ProjectilesManager>();
+                components.AddInHierarchy<AsteroidsManager>();
+                components.AddInHierarchy<EnemiesManager>();
+            });
             
             // Register player
             builder.UseComponents(components =>
@@ -40,6 +45,7 @@ namespace Infrastructure
             
             // Register managers
             builder.RegisterEntryPoint<ScoreManager>().AsSelf();
+            builder.RegisterEntryPoint<GameManager>().AsSelf();
         }
     }
 }

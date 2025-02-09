@@ -27,7 +27,12 @@ namespace Gameplay.Player
         public Vector2 Position
         {
             get => Rigidbody2D.position;
-            set => Rigidbody2D.MovePosition(value);
+            set => Rigidbody2D.position = value;
+        }
+        public Vector2 Velocity
+        {
+            get => Rigidbody2D.linearVelocity;
+            set => Rigidbody2D.linearVelocity = value;
         }
         public Bounds2D Bounds => Bounds2D.FromSprite(SpriteRenderer);
         
@@ -51,7 +56,7 @@ namespace Gameplay.Player
         private void FixedUpdate()
         {
             // Drag
-            Rigidbody2D.linearVelocity = Vector2.Lerp(Rigidbody2D.linearVelocity, Vector2.zero, m_Configuration.LinearDrag * Time.fixedDeltaTime);
+            Velocity = Vector2.Lerp(Rigidbody2D.linearVelocity, Vector2.zero, m_Configuration.LinearDrag * Time.fixedDeltaTime);
             Rigidbody2D.angularVelocity = Mathf.Lerp(Rigidbody2D.angularVelocity, 0.0f, m_Configuration.AngularDrag * Time.fixedDeltaTime);
             
             // Thrust
@@ -59,7 +64,7 @@ namespace Gameplay.Player
             Rigidbody2D.AddTorque(AngularThrust * m_Configuration.RotationSpeed * Time.fixedDeltaTime);
             
             // Clamp velocity
-            Rigidbody2D.linearVelocity = Vector2.ClampMagnitude(Rigidbody2D.linearVelocity, m_Configuration.MaxSpeed);
+            Velocity = Vector2.ClampMagnitude(Rigidbody2D.linearVelocity, m_Configuration.MaxSpeed);
         }
     }
 }

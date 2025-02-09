@@ -2,6 +2,7 @@ namespace Gameplay.Projectiles
 {
     public interface IProjectileCollision
     {
-        void OnProjectileCollision(ProjectileCollisionData collision);
+        ProjectileLayer ProjectileLayer { get; }
+        void            OnProjectileCollision(ProjectileCollisionData collision);
     }
 }

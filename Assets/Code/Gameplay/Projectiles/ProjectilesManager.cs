@@ -24,16 +24,17 @@ namespace Gameplay.Projectiles
         }
         private void OnDestroy() => m_ProjectilesPool.Clear();
 
-        public Projectile Spawn(Vector2 position, Vector2 velocity, float lifetime = 2.0f, IProjectileCollision ignoreCollision = null)
+        public Projectile Spawn(Vector2 position, Vector2 velocity, float lifetime = 2.0f, bool canWrapping = true, ProjectileLayer ignoreCollision = ProjectileLayer.None)
         {
             // Get projectile from pool
             Projectile projectile = m_ProjectilesPool.Get();
 
             // Set projectile properties
-            projectile.Lifetime        = lifetime;
-            projectile.Velocity        = velocity;
-            projectile.Position        = position;
-            projectile.IgnoreCollision = ignoreCollision;
+            projectile.Lifetime    = lifetime;
+            projectile.Velocity    = velocity;
+            projectile.Position    = position;
+            projectile.IgnoreLayer = ignoreCollision;
+            projectile.CanWrapping = canWrapping;
             
             // Set projectile events
             projectile.OnCollision        += _ => Despawn(projectile);

@@ -50,7 +50,7 @@ namespace Gameplay.Player
             Vector2 velocity      = m_Rigidbody2D.linearVelocity + (Vector2)transform.up * m_Configuration.ProjectileSpeed;
             float  lifetime       = m_Configuration.ProjectileLifetime;
             
-            Projectile projectile = m_ProjectilesManager.Spawn(transform.position, velocity, lifetime, m_Collision);
+            Projectile projectile = m_ProjectilesManager.Spawn(transform.position, velocity, lifetime, true, ProjectileLayer.Player);
             projectile.OnDespawn += () => m_ProjectilesCount--;
             
             OnFire.Invoke(projectile);

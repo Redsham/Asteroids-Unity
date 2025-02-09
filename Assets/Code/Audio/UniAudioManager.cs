@@ -97,7 +97,7 @@ namespace Audio
         {
             AudioSource audioSource = m_SfxPool.Get();
             audioSource.transform.position = position;
-            audioSource.clip = asset.Clip;
+            audioSource.clip               = asset.Clip;
             
             audioSource.volume       = asset.Volume;
             audioSource.pitch        = asset.Pitch;

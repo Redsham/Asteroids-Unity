@@ -17,6 +17,7 @@ namespace Gameplay.Enemies
         private readonly List<EnemyBehaviour>                          m_Enemies = new();
         
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
+        [Inject] private readonly IObjectResolver       m_ObjectResolver;
 
         #endregion
 
@@ -39,8 +40,11 @@ namespace Gameplay.Enemies
                     () =>
                     {
                         int index = Array.FindIndex(m_Prefabs, prefab => prefab.GetType() == type);
+                        
                         EnemyBehaviour instance = Instantiate(m_Prefabs[index]);
+                        m_ObjectResolver.Inject(instance);
                         instance.gameObject.SetActive(false);
+                        
                         return instance;
                     },
                     instance => instance.gameObject.SetActive(true),
@@ -61,11 +65,11 @@ namespace Gameplay.Enemies
             pool.Release(enemy);
         }
         
-        public void Spawn(Type type, Vector2 position)
+        public void Spawn(Type type, Vector2 position, IEnemyTarget target)
         {
             EnemyBehaviour enemy = GetFromPool(type);
 
-            enemy.OnSpawn();
+            enemy.OnSpawn(target);
             
             enemy.transform.position = position;
             enemy.OnDestroyed += () =>

@@ -3,7 +3,7 @@ using Gameplay.Asteroids;
 using VContainer;
 using VContainer.Unity;
 
-namespace Gameplay.Managers
+namespace Managers
 {
     public class ScoreManager : IInitializable, IDisposable
     {

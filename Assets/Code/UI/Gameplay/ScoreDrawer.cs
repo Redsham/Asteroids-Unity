@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using Gameplay.Managers;
+using Managers;
 using UnityEngine;
 using VContainer;
 using TMPro;

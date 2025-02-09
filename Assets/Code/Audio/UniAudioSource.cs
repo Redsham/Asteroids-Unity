@@ -44,7 +44,7 @@ namespace Audio
         
         private void Awake()
         {
-            if(m_Asset.PlayOnManager)
+            if(m_Asset.PlayOnManager && !m_Asset.Loop)
                 return;
             
             AudioSource = gameObject.AddComponent<AudioSource>();
@@ -65,7 +65,7 @@ namespace Audio
         
         protected void ApplyVolumeAndPitch()
         {
-            if(m_Asset.PlayOnManager)
+            if(m_Asset.PlayOnManager && !m_Asset.Loop)
                 return;
             
             AudioSource.volume = m_Asset.Volume * Volume;
