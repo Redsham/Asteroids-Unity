@@ -1,3 +1,4 @@
+using System;
 using Gameplay.Player.Configs;
 using Gameplay.Projectiles;
 using UnityEngine;
@@ -7,30 +8,30 @@ namespace Gameplay.Player
 {
     public class PlayerGunner : MonoBehaviour
     {
-        public bool IsFiring { get; set; }
+        #region Fields
+
+        public bool IsControllable { get; set; } = true;
+        public bool IsFiring       { get; set; }
 
         [SerializeField] private GunConfiguration m_Configuration;
         
-        private float                m_Cooldown;
-        private int                  m_ProjectilesCount;
-        private IProjectileCollision m_Collision;
-        private Rigidbody2D          m_Rigidbody2D;
+        private float       m_Cooldown;
+        private int         m_ProjectilesCount;
+        private Rigidbody2D m_Rigidbody2D;
         
-        [Inject] private ProjectilesManager m_ProjectilesManager;
+        [Inject] private readonly ProjectilesManager m_ProjectilesManager;
 
-        public event System.Action<Projectile> OnFire = delegate { };
+        #endregion
+        
+        public event Action<Projectile> OnFire = delegate { };
 
 
-        private void Awake()
-        {
-            m_Collision   = GetComponent<IProjectileCollision>();
-            m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        }
+        private void Awake() => m_Rigidbody2D = GetComponent<Rigidbody2D>();
         private void FixedUpdate()
         {
             m_Cooldown -= Time.fixedDeltaTime;
             
-            if (!IsFiring)
+            if (!IsFiring || !IsControllable)
                 return;
             
             Fire();

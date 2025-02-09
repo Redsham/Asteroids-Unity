@@ -1,6 +1,6 @@
+using UI.Gameplay;
 using VContainer;
 using VContainer.Unity;
-using UI.Gameplay;
 
 namespace Infrastructure
 {
@@ -11,6 +11,7 @@ namespace Infrastructure
             // Register UI components
             builder.RegisterComponentInHierarchy<ScoreDrawer>();
             builder.RegisterComponentInHierarchy<LivesDrawer>();
+            builder.RegisterComponentInHierarchy<WaveNotify>();
         }
     }
 }

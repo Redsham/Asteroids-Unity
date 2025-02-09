@@ -3,6 +3,7 @@ using LitMotion;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using VContainer;
 
@@ -15,32 +16,67 @@ namespace UI.Gameplay
         [SerializeField] private          Image           m_Background;
         
         [Header("Localization")]
+        [SerializeField] private LocalizedString m_WaveStarted;
 
         [Inject]         private readonly WavesManager    m_Manager;
-        
-        private MotionHandle m_MotionHandle;
         
 
         [Inject]
         public void Construct()
         {
             m_Manager.OnWaveStarted += OnWaveStarted;
-            m_Manager.OnWaveEnded += OnWaveEnded;
             gameObject.SetActive(false);
         }
         private void OnDestroy()
         {
-            if(m_Manager != null)
-                m_Manager.OnWaveStarted -= OnWaveStarted;
+            if(m_Manager == null)
+                return;
+            
+            m_Manager.OnWaveStarted -= OnWaveStarted;
         }
 
 
-        private void OnWaveStarted(int wave) => Notify().Forget();
-        private void OnWaveEnded()           => Notify().Forget();
+        private void OnWaveStarted(int wave) => Notify(m_WaveStarted).Forget();
         
-        private async UniTaskVoid Notify()
+        private async UniTaskVoid Notify(LocalizedString localizedText)
         {
+            string text = await localizedText.GetLocalizedStringAsync(m_Manager.Wave);
+            
+            m_Background.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            
+            m_Text.text = string.Empty;
+            m_Text.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            
+            Vector2 endPosition   = m_Background.rectTransform.anchoredPosition;
+            Vector2 startPosition = endPosition + new Vector2(0.0f, -100.0f);
+            
+            gameObject.SetActive(true);
 
+            await LMotion.Create(0.0f, 1.0f, 0.25f)
+                         .Bind(time =>
+                         {
+                             m_Background.color = new Color(1.0f, 1.0f, 1.0f, time);
+                             m_Background.rectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, time);
+                         });
+            
+            foreach (char c in text)
+            {
+                m_Text.text += c;
+                await UniTask.WaitForSeconds(0.01f);
+            }
+            
+            await UniTask.WaitForSeconds(1.0f);
+            
+            await LMotion.Create(1.0f, 0.0f, 0.25f)
+                         .Bind(time =>
+                         {
+                             m_Background.color = new Color(1.0f, 1.0f, 1.0f, time);
+                             m_Text.color = new Color(1.0f, 1.0f, 1.0f, time);
+                             m_Background.rectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, time);
+                         });
+            
+            gameObject.SetActive(false);
+            m_Background.rectTransform.anchoredPosition = endPosition;
         }
     }
 }

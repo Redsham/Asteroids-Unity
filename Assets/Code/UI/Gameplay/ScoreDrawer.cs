@@ -1,8 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Managers;
+using TMPro;
 using UnityEngine;
 using VContainer;
-using TMPro;
 
 namespace UI.Gameplay
 {

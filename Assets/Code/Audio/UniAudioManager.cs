@@ -10,15 +10,6 @@ namespace Audio
 {
     public class UniAudioManager : IUniAudioManager, IInitializable, IDisposable
     {
-        private UniAudioManager()
-        {
-            if (IUniAudioManager.Active != null)
-                throw new InvalidOperationException("UniAudioManager is already initialized.");
-            
-            IUniAudioManager.Active = this;
-        }
-        
-        
         private GameObject              m_Root;
         
         private ObjectPool<AudioSource> m_InterfacePool;
@@ -26,6 +17,8 @@ namespace Audio
         
         public void Initialize()
         {
+            IUniAudioManager.SetActive(this);
+            
             m_Root = new GameObject("Audio");
             Object.DontDestroyOnLoad(m_Root);
             
@@ -60,7 +53,7 @@ namespace Audio
         }
         public void Dispose()
         {
-            IUniAudioManager.Active = null;
+            IUniAudioManager.SetActive(null);
             
             m_InterfacePool.Dispose();
             Object.Destroy(m_Root);

@@ -17,6 +17,9 @@ namespace Gameplay.Player
             get => m_Lives;
             set
             {
+                if (value < 0)
+                    value = 0;
+                
                 if (m_Lives == value)
                     return;
 
@@ -24,12 +27,12 @@ namespace Gameplay.Player
                 OnLivesChanged(value);
 
                 if (m_Lives <= 0)
-                    OnDeath();
+                    Death().Forget();
             }
         }
-        public bool IsAlive      => Lives > 0;
         private int  m_Lives = 3;
-        
+        public  bool IsAlive      => Lives > 0;
+
         public bool Invulnerable
         {
             get => m_Invulnerable;
@@ -64,15 +67,22 @@ namespace Gameplay.Player
         /// <summary>
         /// Invokes when player's invulnerability state changes.
         /// </summary>
-        public event Action<bool>     OnInvulnerabilityChanged = delegate { };
+        public event Action<bool> OnInvulnerabilityChanged = delegate { };
+
         /// <summary>
         /// Invokes when player's lives count changes (new value, old value).
         /// </summary>
-        public event Action<int> OnLivesChanged           = delegate { };
+        public event Action<int> OnLivesChanged = delegate { };
+
         /// <summary>
         /// Invokes when player dies.
         /// </summary>
-        public event Action           OnDeath                  = delegate { };
+        public event Action OnDeath = delegate { };
+
+        /// <summary>
+        /// Invokes when player explodes.
+        /// </summary>
+        public event Action OnExplode = delegate { };
 
         #endregion
 
@@ -120,7 +130,7 @@ namespace Gameplay.Player
         {
             Lives--;
             m_DeathSound.Play();
-            
+
             if (IsAlive)
                 GiveInvulnerability(2.0f);
         }
@@ -131,6 +141,18 @@ namespace Gameplay.Player
             Invulnerable = true;
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             Invulnerable = false;
+        }
+        
+        private async UniTaskVoid Death()
+        {
+            Movement.IsControllable = false;
+            Shooting.IsControllable = false;
+            
+            OnDeath.Invoke();
+            await UniTask.WaitForSeconds(3.0f);
+            
+            OnExplode.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }

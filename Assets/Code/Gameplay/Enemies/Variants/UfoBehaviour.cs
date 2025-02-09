@@ -24,11 +24,10 @@ namespace Gameplay.Enemies.Variants
         [SerializeField] private float         m_FireRate           = 1.0f;
         [SerializeField] private float         m_ProjectileSpeed    = 5.0f;
         [SerializeField] private float         m_ProjectileLifeTime = 5.0f;
-        [SerializeField] private SfxAudioAsset m_FireSound          = null;
+        [SerializeField] private SfxAudioAsset m_FireSound;
         
         [Inject] private readonly ProjectilesManager    m_ProjectilesManager;
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpaceManager;
-        [Inject] private readonly IUniAudioManager      m_AudioManager;
 
 
         protected Vector2 GetPathToTarget() => m_UnboundedSpaceManager.ShortestPath(Position, Target.Position);
@@ -86,7 +85,7 @@ namespace Gameplay.Enemies.Variants
             m_ProjectilesManager.Spawn(transform.position, direction * m_ProjectileSpeed,
                                        m_ProjectileLifeTime, true, ProjectileLayer.Enemy);
             
-            m_AudioManager.PlayWorld(m_FireSound, transform.position);
+            IUniAudioManager.Active.PlayWorld(m_FireSound, transform.position);
         }
     }
 }

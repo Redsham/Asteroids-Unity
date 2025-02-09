@@ -1,4 +1,5 @@
 using Gameplay.Asteroids;
+using Gameplay.Cameras;
 using Gameplay.Enemies;
 using Gameplay.Player;
 using Gameplay.Player.Inputs;
@@ -18,8 +19,11 @@ namespace Infrastructure
         
         protected override void Configure(IContainerBuilder builder)
         {
+            // Register camera controller
+            builder.RegisterComponentInHierarchy<ICameraController>();
+            
             // Register unbound space
-            builder.RegisterComponentInHierarchy<UnboundedSpaceManager>();
+            builder.RegisterEntryPoint<UnboundedSpaceManager>().AsSelf();
             
             // Register managers
             builder.UseComponents(components =>

@@ -1,19 +1,23 @@
 using System.Collections.Generic;
+using Gameplay.Cameras;
 using Other;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Gameplay.UnboundedSpace
 {
-    public class UnboundedSpaceManager : MonoBehaviour
+    public class UnboundedSpaceManager : IFixedTickable
     {
-        public Bounds2D Bounds { get; private set; }
+        public           Bounds2D          Bounds { get; private set; }
+
+        private readonly List<IUnboundedSpaceTransform> m_Objects        = new();
+        private readonly Stack<IUnboundedSpaceWrapped>  m_WrappedObjects = new();
         
-        [SerializeField] private Camera                         m_Camera;
-        private readonly         List<IUnboundedSpaceTransform> m_Objects        = new();
-        private readonly         Stack<IUnboundedSpaceWrapped>  m_WrappedObjects = new();
-        
-        
-        public void Register(IUnboundedSpaceTransform obj) => m_Objects.Add(obj);
+        [Inject] private readonly ICameraController              m_Camera;
+
+
+        public void Register(IUnboundedSpaceTransform   obj) => m_Objects.Add(obj);
         public void Unregister(IUnboundedSpaceTransform obj) => m_Objects.Remove(obj);
         
         public Vector2 ShortestPath(Vector2 start, Vector2 end)
@@ -23,10 +27,9 @@ namespace Gameplay.UnboundedSpace
             return new Vector2(dx, dy);
         }
 
-        private void Awake() => Bounds = GetViewportBounds();
-        private void FixedUpdate()
+        public void FixedTick()
         {
-            Bounds = GetViewportBounds();
+            Bounds = m_Camera.View;
             
             m_WrappedObjects.Clear();
             foreach (IUnboundedSpaceTransform obj in m_Objects)
@@ -54,13 +57,6 @@ namespace Gameplay.UnboundedSpace
             // Notify wrapped objects
             while (m_WrappedObjects.TryPop(out IUnboundedSpaceWrapped wrapped))
                 wrapped.OnSpaceWrapped();
-        }
-        private Bounds2D GetViewportBounds()
-        {
-            Vector2 max = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
-            Vector2 min = m_Camera.ScreenToWorldPoint(Vector3.zero);
-            
-            return new Bounds2D(min, max);
         }
     }
 }

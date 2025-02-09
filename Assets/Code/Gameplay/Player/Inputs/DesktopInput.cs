@@ -21,16 +21,6 @@ namespace Gameplay.Player.Inputs
             fire.performed += OnFire;
             fire.canceled  += OnFire;
         }
-        
-        private void OnMove(InputAction.CallbackContext context)
-        {
-            Vector2 value = context.ReadValue<Vector2>();
-            
-            LinearThrust  = value.y;
-            AngularThrust = -value.x;
-        }
-        private void OnFire(InputAction.CallbackContext context) => IsFiring = context.ReadValueAsButton();
-
         public void Dispose()
         {
             InputAction move = m_InputActionAsset["Player/Move"];
@@ -42,5 +32,14 @@ namespace Gameplay.Player.Inputs
             fire.performed -= OnFire;
             fire.canceled  -= OnFire;
         }
+        
+        private void OnMove(InputAction.CallbackContext context)
+        {
+            Vector2 value = context.ReadValue<Vector2>();
+            
+            LinearThrust  = value.y;
+            AngularThrust = -value.x;
+        }
+        private void OnFire(InputAction.CallbackContext context) => IsFiring = context.ReadValueAsButton();
     }
 }

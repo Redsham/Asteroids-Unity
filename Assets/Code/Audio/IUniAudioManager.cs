@@ -4,7 +4,15 @@ namespace Audio
 {
     public interface IUniAudioManager
     {
-        internal static IUniAudioManager Active;
+        public static IUniAudioManager Active { get; private set; }
+        internal static void SetActive(IUniAudioManager manager)
+        {
+            if (Active != null && manager != null)
+                throw new System.InvalidOperationException("UniAudioManager is already initialized.");
+            
+            Active = manager;
+        }
+        
         
         void Play(UniAudioAsset        asset);
         void PlayWorld(WorldAudioAsset asset, Vector2 position);

@@ -1,8 +1,8 @@
-using Audio;
 using Audio.Sources;
+using Gameplay.Cameras;
+using Gameplay.Cameras.Shakes;
 using UnityEngine;
 using UnityEngine.Pool;
-using VContainer;
 
 namespace Gameplay.Asteroids
 {
@@ -30,6 +30,9 @@ namespace Gameplay.Asteroids
             
             // Play sound
             m_AudioSource.Play();
+            
+            // Play shake
+            ICameraController.Active.Shake(new SimpleShake(0.1f, 0.2f * ((float)asteroid.Level + 1.0f)));
         }
         private void OnParticleSystemStopped() => m_Pool.Release(this);
     }

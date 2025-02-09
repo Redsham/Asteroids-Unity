@@ -30,7 +30,7 @@ namespace Managers
 
         [Inject] private readonly PlayerBehaviour m_Player;
         
-        private int m_Wave;
+        public  int Wave { get; private set; }
 
         #endregion
         
@@ -44,12 +44,12 @@ namespace Managers
 
         public async UniTask StartWave(CancellationToken token)
         {
-            m_Wave++;
-            OnWaveStarted.Invoke(m_Wave);
+            Wave++;
+            OnWaveStarted.Invoke(Wave);
             
             await UniTask.WaitForSeconds(3.0f, cancellationToken: token);
             
-            Compute(m_Wave, out int asteroidsCount, out int bigUfosCount, out int smallUfosCount);
+            Compute(Wave, out int asteroidsCount, out int bigUfosCount, out int smallUfosCount);
 
             await UniTask.WhenAll(
                 SpawnAsteroids(asteroidsCount, MAX_ASTEROIDS, token),

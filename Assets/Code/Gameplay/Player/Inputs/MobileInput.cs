@@ -14,7 +14,7 @@ namespace Gameplay.Player.Inputs
         public void SetDirection(Vector2 direction) => m_Direction = direction;
         public void SetThrust(bool       isHolding) => LinearThrust = isHolding ? 1.0f : 0.0f;
         public void SetFire(bool         isHolding) => IsFiring = isHolding;
-
+        
         
         public void FixedTick()
         {

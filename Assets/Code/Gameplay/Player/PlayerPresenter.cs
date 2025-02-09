@@ -8,6 +8,8 @@ namespace Gameplay.Player
     {
         [SerializeField] private SpriteRenderer m_SpriteRenderer;
         [SerializeField] private ParticleSystem m_ThrusterParticles;
+        
+        [SerializeField] private GameObject m_ExplosionPrefab;
 
         [Inject] private readonly PlayerBehaviour m_Behaviour;
         [Inject] private readonly PlayerMovement  m_Movement;
@@ -28,6 +30,12 @@ namespace Gameplay.Player
                     return;
                 
                 InvulnerabilityAnimation().Forget();
+            };
+
+            m_Behaviour.OnExplode += () =>
+            {
+                Instantiate(m_ExplosionPrefab, transform.position, Quaternion.identity);
+                gameObject.SetActive(false);
             };
         }
         private void Update()

@@ -2,6 +2,8 @@
     "name": "UnboundedSpace",
     "rootNamespace": "",
     "references": [
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:c69b9637fe5a4f7cb1a560512b560268",
         "GUID:36c4de29ff4e57b45b795a8a437556e8"
     ],
     "includePlatforms": [],
