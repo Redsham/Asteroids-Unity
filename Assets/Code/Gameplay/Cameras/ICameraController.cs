@@ -1,3 +1,4 @@
+using System;
 using Other;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Gameplay.Cameras
         internal static void SetActive(ICameraController controller)
         {
             if (Active != null)
-                throw new System.Exception("Only one camera controller can be active at a time.");
+                throw new Exception("Only one camera controller can be active at a time.");
             
             Active = controller;
         }

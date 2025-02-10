@@ -30,6 +30,10 @@ MonoBehaviour:
     m_Localized: Settings
     m_Metadata:
       m_Items: []
+  - m_Id: 2446066704384
+    m_Localized: Developed by Maksim Evdokimov
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Audio
@@ -8,7 +9,7 @@ namespace Audio
         internal static void SetActive(IUniAudioManager manager)
         {
             if (Active != null && manager != null)
-                throw new System.InvalidOperationException("UniAudioManager is already initialized.");
+                throw new InvalidOperationException("UniAudioManager is already initialized.");
             
             Active = manager;
         }
