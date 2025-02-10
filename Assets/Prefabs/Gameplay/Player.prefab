@@ -4916,7 +4916,7 @@ MonoBehaviour:
   m_Configuration:
     m_MaxSpeed: 20
     m_Acceleration: 1000
-    m_RotationSpeed: 120
+    m_RotationSpeed: 160
     m_LinearDrag: 1.5
     m_AngularDrag: 4
 --- !u!114 &3147170682732195304
@@ -4948,7 +4948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9942300f1da40f7bc6d409de56d267f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DeathSound: {fileID: 4968861032754802998}
 --- !u!114 &4439852343811708866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4978,6 +4977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Thruster: {fileID: 3964761297875388240}
   m_Shot: {fileID: 11400000, guid: 91940db3cc2928a4ab70e916877b1c21, type: 2}
+  m_Damage: {fileID: 11400000, guid: ccada4b284e70454baada99ccacc244d, type: 2}
 --- !u!212 &4471722722436494311
 SpriteRenderer:
   m_ObjectHideFlags: 0

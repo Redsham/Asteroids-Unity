@@ -17,6 +17,12 @@ namespace Gameplay.Player
         public SpriteRenderer        SpriteRenderer { get; private set; }
         public MovementConfiguration Configuration  => m_Configuration;
 
+        public float Rotation
+        {
+            get => Rigidbody2D.rotation;
+            set => Rigidbody2D.rotation = value;
+        }
+        
         public float LinearThrust
         {
             get => IsControllable ? m_LinearThrust : 0.0f;

@@ -1,4 +1,5 @@
 using Audio;
+using UI.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -17,6 +18,9 @@ namespace Infrastructure
             
             // Register AudioManager
             builder.RegisterEntryPoint<UniAudioManager>().As<IUniAudioManager>();
+            
+            // Register fade
+            builder.RegisterComponentInHierarchy<Fade>();
         }
     }
 }

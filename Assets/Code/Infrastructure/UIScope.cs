@@ -1,4 +1,5 @@
 using UI.Gameplay;
+using UI.Gameplay.Elements;
 using VContainer;
 using VContainer.Unity;
 
@@ -14,7 +15,7 @@ namespace Infrastructure
             builder.RegisterComponentInHierarchy<WaveNotify>();
             
             // Register UI screens
-            builder.RegisterComponentInHierarchy<GameOverScreen>();
+            builder.RegisterComponentInHierarchy<GameOverUI>();
             builder.RegisterComponentInHierarchy<GameScreensDrawer>();
         }
     }

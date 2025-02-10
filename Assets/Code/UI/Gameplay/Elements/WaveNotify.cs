@@ -1,3 +1,4 @@
+using Audio.Sources;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using Managers;
@@ -7,19 +8,24 @@ using UnityEngine.Localization;
 using UnityEngine.UI;
 using VContainer;
 
-namespace UI.Gameplay
+namespace UI.Gameplay.Elements
 {
     public class WaveNotify : MonoBehaviour
     {
+        #region Fields
+
         [Header("Components")]
         [SerializeField] private          TextMeshProUGUI m_Text;
         [SerializeField] private          Image           m_Background;
         
-        [Header("Localization")]
-        [SerializeField] private LocalizedString m_WaveStarted;
+        [Header("Other")]
+        [SerializeField] private LocalizedString      m_WaveStarted;
+        [SerializeField] private InterfaceAudioSource m_AudioSource;
 
         [Inject]         private readonly WavesManager    m_Manager;
-        
+
+        #endregion
+
 
         [Inject]
         public void Construct()
@@ -37,7 +43,6 @@ namespace UI.Gameplay
 
 
         private void OnWaveStarted(uint wave) => Notify(m_WaveStarted).Forget();
-        
         private async UniTaskVoid Notify(LocalizedString localizedText)
         {
             string text = await localizedText.GetLocalizedStringAsync(m_Manager.Wave);
@@ -51,8 +56,10 @@ namespace UI.Gameplay
             Vector2 startPosition = endPosition + new Vector2(0.0f, -100.0f);
             
             gameObject.SetActive(true);
+            m_AudioSource.Play();
 
             await LMotion.Create(0.0f, 1.0f, 0.25f)
+                         .WithEase(Ease.OutCubic)
                          .Bind(time =>
                          {
                              m_Background.color = new Color(1.0f, 1.0f, 1.0f, time);
@@ -68,6 +75,7 @@ namespace UI.Gameplay
             await UniTask.WaitForSeconds(1.0f);
             
             await LMotion.Create(1.0f, 0.0f, 0.25f)
+                         .WithEase(Ease.InCubic)
                          .Bind(time =>
                          {
                              m_Background.color = new Color(1.0f, 1.0f, 1.0f, time);

@@ -1,6 +1,7 @@
 using LitMotion;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI.Elements.Buttons
 {
@@ -25,21 +26,36 @@ namespace UI.Elements.Buttons
         }
         private bool m_IsHovered;
 
-        private float m_HoverFactor;
-        private float m_ClickFactor;
+        private float m_HoverFactor = 0.0f;
+        private float m_ClickFactor = 1.0f;
         
         private MotionHandle m_HoverMotion;
         private MotionHandle m_ClickMotion;
 
-        
+        public override bool Interactable
+        {
+            get => InternalInteractable;
+            set
+            {
+                InternalInteractable = value;
+                
+                m_HoverFactor = 0.0f;
+                m_ClickFactor = 1.0f;
+                
+                foreach (Graphic graphic in GetComponentsInChildren<Graphic>())
+                    graphic.color = value ? Color.white : new Color(0.5f, 0.5f, 0.5f, 1.0f);
+            }
+        }
+
+
         protected override void HandleInput()
         {
             base.HandleInput();
             
             m_ClickMotion.TryComplete();
-            m_ClickMotion = LMotion.Punch.Create(0.0f, 0.1f, 0.5f)
-                                   .WithDampingRatio(5.0f)
-                                   .WithFrequency(3)
+            m_ClickMotion = LMotion.Punch.Create(1.0f, 0.1f, 0.15f)
+                                   .WithFrequency(2)
+                                   .WithDampingRatio(2.0f)
                                    .WithEase(Ease.OutExpo)
                                    .Bind(time => m_ClickFactor = time);
         }
@@ -49,7 +65,7 @@ namespace UI.Elements.Buttons
 
         private void Update()
         {
-            transform.localScale = Vector3.one * (1.0f + m_ClickFactor + m_HoverFactor * 0.05f);
+            transform.localScale = Vector3.one * (m_ClickFactor + (m_HoverFactor * (Interactable ? 1.0f : 0.0f)) * 0.05f);
         }
     }
 }

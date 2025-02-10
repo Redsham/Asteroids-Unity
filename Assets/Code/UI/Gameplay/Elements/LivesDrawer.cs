@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace UI.Gameplay
+namespace UI.Gameplay.Elements
 {
     public class LivesDrawer : MonoBehaviour
     {

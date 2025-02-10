@@ -16,9 +16,9 @@ namespace Managers
     {
         #region Constants
 
-        public const uint MAX_ASTEROIDS = 12;
-        public const uint MAX_BIG_UFOS  = 6;
-        public const uint MAX_SMALL_UFOS = 3;
+        private const uint MAX_ASTEROIDS  = 12u;
+        private const uint MAX_BIG_UFOS   = 6u;
+        private const uint MAX_SMALL_UFOS = 3u;
 
         #endregion
         
@@ -54,7 +54,7 @@ namespace Managers
             await UniTask.WhenAll(
                 SpawnAsteroids(asteroidsCount, MAX_ASTEROIDS, token),
                 SpawnUfos(typeof(BigUfo), bigUfosCount, MAX_BIG_UFOS, token),
-                SpawnUfos(typeof(SmallUfo), bigUfosCount, MAX_SMALL_UFOS, token)
+                SpawnUfos(typeof(SmallUfo), smallUfosCount, MAX_SMALL_UFOS, token)
             );
 
             await UniTask.WaitUntil(() => (m_Asteroids.Count == 0 && m_Enemies.Count == 0) || token.IsCancellationRequested);
@@ -69,9 +69,9 @@ namespace Managers
         
         private static void Compute(uint wave, out uint asteroidsCount, out uint bigUfosCount, out uint smallUfosCount)
         {
-            smallUfosCount = wave / 10;
-            bigUfosCount   = wave / 5 - smallUfosCount;
-            asteroidsCount = wave * 2 - smallUfosCount * 8 - bigUfosCount * 10;
+            smallUfosCount = wave / 10u;
+            bigUfosCount   = wave / 5u - smallUfosCount;
+            asteroidsCount = wave * 2u - smallUfosCount * 8u - bigUfosCount * 10u;
         }
         private Vector2 GetSpawnPosition(float safeRadius)
         {

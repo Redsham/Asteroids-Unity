@@ -45,7 +45,7 @@ namespace Gameplay.Enemies.Variants
                 return;
             
             m_FireCooldown = 1.0f / FireRate;
-            Fire(AddDeviationByRotation(GetPredictedShotDirection(out float time), 5.0f));
+            Fire(AddDeviationByRotation(GetPredictedShotDirection(out float time), 5.0f * Mathf.Deg2Rad));
         }
     }
 }

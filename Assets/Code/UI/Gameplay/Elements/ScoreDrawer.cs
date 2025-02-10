@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using VContainer;
 
-namespace UI.Gameplay
+namespace UI.Gameplay.Elements
 {
     public class ScoreDrawer : MonoBehaviour
     {

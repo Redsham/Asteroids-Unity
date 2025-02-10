@@ -27,8 +27,10 @@ namespace Managers
         #endregion
 
         public event Action<uint> OnScoreChanged;
+
         
-        
+        #region Lifecycle
+
         public void Initialize()
         {
             m_Asteroids.OnAsteroidDestroyed += OnAsteroidDestroyed;
@@ -39,6 +41,10 @@ namespace Managers
             m_Asteroids.OnAsteroidDestroyed -= OnAsteroidDestroyed;
             m_Enemies.OnEnemyDestroyed      -= OnEnemyDestroyed;
         }
+
+        #endregion
+
+        #region Handlers
 
         private void OnAsteroidDestroyed(AsteroidBehaviour asteroid)
         {
@@ -56,5 +62,7 @@ namespace Managers
             }
         }
         private void OnEnemyDestroyed(EnemyBehaviour enemy) => Score += enemy.Score;
+
+        #endregion
     }
 }
