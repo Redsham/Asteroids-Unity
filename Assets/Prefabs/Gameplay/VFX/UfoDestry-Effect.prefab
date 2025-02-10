@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 9187951625801050742}
   - component: {fileID: 1916536154888266575}
   - component: {fileID: 7595464040080940684}
-  - component: {fileID: 1169110066895085242}
-  - component: {fileID: 5605506052541646405}
   m_Layer: 0
   m_Name: UfoDestry-Pieces
   m_TagString: Untagged
@@ -4893,34 +4891,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1169110066895085242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300878703293242410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 407ff9d130a24340b9c43b5a7ff9d31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5605506052541646405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300878703293242410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de3e4f4f4b26460aaa5f3e7e9011e604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Asset: {fileID: 11400000, guid: 7b26a25a73614a74e97a1cf17768fdd6, type: 2}
-  InstanceVolume: 1
-  InstancePitch: 1
-  InstancePlayOnAwake: 1
 --- !u!1 &2954556964058299195
 GameObject:
   m_ObjectHideFlags: 0
@@ -4932,8 +4902,6 @@ GameObject:
   - component: {fileID: 4039078511040957150}
   - component: {fileID: 5954184633825966636}
   - component: {fileID: 8004335094278635290}
-  - component: {fileID: 6615654039288045379}
-  - component: {fileID: 8040141359142629488}
   m_Layer: 0
   m_Name: UfoDestry-Pieces
   m_TagString: Untagged
@@ -9814,34 +9782,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6615654039288045379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954556964058299195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 407ff9d130a24340b9c43b5a7ff9d31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8040141359142629488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954556964058299195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de3e4f4f4b26460aaa5f3e7e9011e604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Asset: {fileID: 11400000, guid: 7b26a25a73614a74e97a1cf17768fdd6, type: 2}
-  InstanceVolume: 1
-  InstancePitch: 1
-  InstancePlayOnAwake: 1
 --- !u!1 &4187817442065399187
 GameObject:
   m_ObjectHideFlags: 0

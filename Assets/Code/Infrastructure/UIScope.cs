@@ -12,6 +12,8 @@ namespace Infrastructure
             builder.RegisterComponentInHierarchy<ScoreDrawer>();
             builder.RegisterComponentInHierarchy<LivesDrawer>();
             builder.RegisterComponentInHierarchy<WaveNotify>();
+            
+            builder.RegisterComponentInHierarchy<GameScreensDrawer>();
         }
     }
 }

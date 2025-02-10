@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd2562d3ba7d4e07a766d6c365fab675, type: 3}
-  m_Name: Death
+  m_Name: Damage
   m_EditorClassIdentifier: 
   m_Loop: 0
   m_PlayOnAwake: 0

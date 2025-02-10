@@ -346,6 +346,8 @@ GameObject:
   - component: {fileID: 355967266}
   - component: {fileID: 355967265}
   - component: {fileID: 355967264}
+  - component: {fileID: 355967269}
+  - component: {fileID: 355967268}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -429,7 +431,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 88520828}
-  - {fileID: 1483446950}
   - {fileID: 1400491436}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -438,6 +439,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &355967268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355967263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6a4237cb284c79bbdeb24d574802d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameUI: {fileID: 1400491437}
+--- !u!225 &355967269
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355967263}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &457185173 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5235576272243924727, guid: 1122557fc0dc06b4dace4b5007834973, type: 3}
@@ -1248,6 +1274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400491436}
+  - component: {fileID: 1400491437}
   m_Layer: 5
   m_Name: Game
   m_TagString: Untagged
@@ -1270,6 +1297,7 @@ RectTransform:
   - {fileID: 929638547}
   - {fileID: 634076247}
   - {fileID: 1358450667}
+  - {fileID: 1483446950}
   m_Father: {fileID: 355967267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1277,6 +1305,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1400491437
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400491435}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1408392044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,7 +1761,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 355967267}
+    m_TransformParent: {fileID: 1400491436}
     m_Modifications:
     - target: {fileID: 6865244765175348046, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
       propertyPath: m_Name
@@ -1781,15 +1821,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7422942049878587327, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7422942049878587327, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7422942049878587327, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7422942049878587327, guid: 1cded6956a8e5824b8ef3b396b72112b, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1824,6 +1864,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 825743665754625291, guid: 1122557fc0dc06b4dace4b5007834973, type: 3}
+      propertyPath: m_Damage
+      value: 
+      objectReference: {fileID: 11400000, guid: ccada4b284e70454baada99ccacc244d, type: 2}
     - target: {fileID: 2530672470507614523, guid: 1122557fc0dc06b4dace4b5007834973, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -1,5 +1,5 @@
 using System;
-using Audio.Sources;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Gameplay.Asteroids;
 using Gameplay.Enemies;
@@ -22,12 +22,23 @@ namespace Gameplay.Player
                 
                 if (m_Lives == value)
                     return;
+                
+                if(value < Lives)
+                    OnDamaged.Invoke();
+                else
+                    OnRegenerated.Invoke();
+                
+                if(!IsAlive && value > 0)
+                    Revive();
 
                 m_Lives = value;
                 OnLivesChanged(value);
 
                 if (m_Lives <= 0)
-                    Death().Forget();
+                {
+                    m_DeathTokenSource = new CancellationTokenSource();
+                    Death(m_DeathTokenSource.Token).Forget();
+                }
             }
         }
         private int  m_Lives = 3;
@@ -51,6 +62,8 @@ namespace Gameplay.Player
         
         public ProjectileLayer ProjectileLayer => ProjectileLayer.Player;
         
+        private CancellationTokenSource m_DeathTokenSource;
+        
         #region Components
 
         public PlayerMovement Movement { get; private set; }
@@ -58,8 +71,6 @@ namespace Gameplay.Player
 
         #endregion
         
-        [SerializeField] private WorldAudioSource m_DeathSound;
-
         #endregion
 
         #region Events
@@ -73,6 +84,16 @@ namespace Gameplay.Player
         /// Invokes when player's lives count changes (new value, old value).
         /// </summary>
         public event Action<int> OnLivesChanged = delegate { };
+        
+        /// <summary>
+        /// Invokes when player takes damage.
+        /// </summary>
+        public event Action OnDamaged = delegate { };
+        
+        /// <summary>
+        /// Invokes when player regenerates health.
+        /// </summary>
+        public event Action OnRegenerated = delegate { };
 
         /// <summary>
         /// Invokes when player dies.
@@ -83,6 +104,11 @@ namespace Gameplay.Player
         /// Invokes when player explodes.
         /// </summary>
         public event Action OnExplode = delegate { };
+        
+        /// <summary>
+        /// Invokes when player revives.
+        /// </summary>
+        public event Action OnRevived = delegate { };
 
         #endregion
 
@@ -129,10 +155,20 @@ namespace Gameplay.Player
         private void TakeDamage()
         {
             Lives--;
-            m_DeathSound.Play();
 
             if (IsAlive)
                 GiveInvulnerability(2.0f);
+        }
+        private void Revive()
+        {
+            m_DeathTokenSource?.Cancel();
+            
+            Movement.IsControllable = true;
+            Shooting.IsControllable = true;
+            
+            gameObject.SetActive(true);
+            
+            OnRevived.Invoke();
         }
         
         public void GiveInvulnerability(float duration) => InvulnerabilityRoutine(duration).Forget();
@@ -143,13 +179,13 @@ namespace Gameplay.Player
             Invulnerable = false;
         }
         
-        private async UniTaskVoid Death()
+        private async UniTaskVoid Death(CancellationToken token)
         {
             Movement.IsControllable = false;
             Shooting.IsControllable = false;
             
             OnDeath.Invoke();
-            await UniTask.WaitForSeconds(3.0f);
+            await UniTask.WaitForSeconds(3.0f, cancellationToken: token);
             
             OnExplode.Invoke();
             gameObject.SetActive(false);

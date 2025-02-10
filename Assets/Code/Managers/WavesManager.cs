@@ -57,7 +57,7 @@ namespace Managers
                 SpawnUfos(typeof(SmallUfo), bigUfosCount, MAX_SMALL_UFOS, token)
             );
 
-            await UniTask.WaitUntil(() => m_Asteroids.Count == 0 && m_Enemies.Count == 0, cancellationToken: token);
+            await UniTask.WaitUntil(() => (m_Asteroids.Count == 0 && m_Enemies.Count == 0) || token.IsCancellationRequested);
             
             OnWaveEnded.Invoke();
         }
@@ -91,7 +91,7 @@ namespace Managers
             for (int i = 0; i < count && !token.IsCancellationRequested; i++)
             {
                 m_Asteroids.Spawn(GetSpawnPosition(5.0f), Random.insideUnitCircle.normalized * Random.Range(3.0f, 5.0f), AsteroidLevel.Large);
-                await UniTask.WaitUntil(() => m_Asteroids.Count < limit, cancellationToken: token);
+                await UniTask.WaitUntil(() => m_Asteroids.Count < limit || token.IsCancellationRequested);
             }
         }
         private async UniTask SpawnUfos(Type type, int count, int limit, CancellationToken token = default)
@@ -99,7 +99,7 @@ namespace Managers
             for (int i = 0; i < count && !token.IsCancellationRequested; i++)
             {
                 m_Enemies.Spawn(type, GetSpawnPosition(5.0f), m_Player);
-                await UniTask.WaitUntil(() => m_Asteroids.Count < limit, cancellationToken: token);
+                await UniTask.WaitUntil(() => m_Asteroids.Count < limit || token.IsCancellationRequested);
             }
         }
     }
