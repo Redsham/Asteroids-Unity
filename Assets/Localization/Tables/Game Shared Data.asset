@@ -19,6 +19,26 @@ MonoBehaviour:
     m_Key: wave_start
     m_Metadata:
       m_Items: []
+  - m_Id: 45564682035200
+    m_Key: game_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52221755514880
+    m_Key: score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52345462317056
+    m_Key: wave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56080326451200
+    m_Key: revive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56615314120704
+    m_Key: exit_menu
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

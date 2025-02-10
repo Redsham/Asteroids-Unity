@@ -16,9 +16,9 @@ namespace Managers
     {
         #region Constants
 
-        public const int MAX_ASTEROIDS = 12;
-        public const int MAX_BIG_UFOS  = 6;
-        public const int MAX_SMALL_UFOS = 3;
+        public const uint MAX_ASTEROIDS = 12;
+        public const uint MAX_BIG_UFOS  = 6;
+        public const uint MAX_SMALL_UFOS = 3;
 
         #endregion
         
@@ -29,14 +29,14 @@ namespace Managers
         [Inject] private readonly UnboundedSpaceManager m_UnboundedSpace;
 
         [Inject] private readonly PlayerBehaviour m_Player;
-        
-        public  int Wave { get; private set; }
+
+        public uint Wave { get; set; }
 
         #endregion
         
         #region Events
         
-        public event Action<int> OnWaveStarted = delegate { };
+        public event Action<uint> OnWaveStarted = delegate { };
         public event Action      OnWaveEnded = delegate { };
         
         #endregion
@@ -49,7 +49,7 @@ namespace Managers
             
             await UniTask.WaitForSeconds(3.0f, cancellationToken: token);
             
-            Compute(Wave, out int asteroidsCount, out int bigUfosCount, out int smallUfosCount);
+            Compute(Wave, out uint asteroidsCount, out uint bigUfosCount, out uint smallUfosCount);
 
             await UniTask.WhenAll(
                 SpawnAsteroids(asteroidsCount, MAX_ASTEROIDS, token),
@@ -67,7 +67,7 @@ namespace Managers
             m_Enemies.Clear();
         }
         
-        private static void Compute(int wave, out int asteroidsCount, out int bigUfosCount, out int smallUfosCount)
+        private static void Compute(uint wave, out uint asteroidsCount, out uint bigUfosCount, out uint smallUfosCount)
         {
             smallUfosCount = wave / 10;
             bigUfosCount   = wave / 5 - smallUfosCount;
@@ -86,7 +86,7 @@ namespace Managers
             return position;
         }
         
-        private async UniTask SpawnAsteroids(int count, int limit, CancellationToken token = default)
+        private async UniTask SpawnAsteroids(uint count, uint limit, CancellationToken token = default)
         {
             for (int i = 0; i < count && !token.IsCancellationRequested; i++)
             {
@@ -94,7 +94,7 @@ namespace Managers
                 await UniTask.WaitUntil(() => m_Asteroids.Count < limit || token.IsCancellationRequested);
             }
         }
-        private async UniTask SpawnUfos(Type type, int count, int limit, CancellationToken token = default)
+        private async UniTask SpawnUfos(Type type, uint count, uint limit, CancellationToken token = default)
         {
             for (int i = 0; i < count && !token.IsCancellationRequested; i++)
             {

@@ -103,7 +103,7 @@ namespace Gameplay.Player
         /// <summary>
         /// Invokes when player explodes.
         /// </summary>
-        public event Action OnExplode = delegate { };
+        public event Action OnExploded = delegate { };
         
         /// <summary>
         /// Invokes when player revives.
@@ -187,7 +187,7 @@ namespace Gameplay.Player
             OnDeath.Invoke();
             await UniTask.WaitForSeconds(3.0f, cancellationToken: token);
             
-            OnExplode.Invoke();
+            OnExploded.Invoke();
             gameObject.SetActive(false);
         }
     }

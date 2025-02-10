@@ -24,6 +24,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4871754801917198601
+  - m_Id: 45564682035200
+    m_Localized: 'Game
+
+      over'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52221755514880
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52345462317056
+    m_Localized: Waves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56080326451200
+    m_Localized: Watch & Revive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56615314120704
+    m_Localized: Quit to Menu
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

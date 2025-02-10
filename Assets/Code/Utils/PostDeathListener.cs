@@ -13,12 +13,12 @@ namespace Utils
         [Inject]
         private void Construct()
         {
-            m_Player.OnExplode += OnDeath;
+            m_Player.OnExploded += OnDeath;
             m_Player.OnRevived += OnRevived;
         }
         private void OnDestroy()
         {
-            m_Player.OnExplode -= OnDeath;
+            m_Player.OnExploded -= OnDeath;
             m_Player.OnRevived -= OnRevived;
         }
 

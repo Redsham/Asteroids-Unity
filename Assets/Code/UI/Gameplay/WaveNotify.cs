@@ -36,7 +36,7 @@ namespace UI.Gameplay
         }
 
 
-        private void OnWaveStarted(int wave) => Notify(m_WaveStarted).Forget();
+        private void OnWaveStarted(uint wave) => Notify(m_WaveStarted).Forget();
         
         private async UniTaskVoid Notify(LocalizedString localizedText)
         {

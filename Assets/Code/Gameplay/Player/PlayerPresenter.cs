@@ -32,7 +32,7 @@ namespace Gameplay.Player
                 InvulnerabilityAnimation().Forget();
             };
 
-            m_Behaviour.OnExplode += () =>
+            m_Behaviour.OnExploded += () =>
             {
                 Instantiate(m_ExplosionPrefab, transform.position, Quaternion.identity);
                 gameObject.SetActive(false);

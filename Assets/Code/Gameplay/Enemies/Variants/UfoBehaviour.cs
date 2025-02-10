@@ -35,7 +35,7 @@ namespace Gameplay.Enemies.Variants
         {
             time = float.MaxValue;
             
-            Vector2 toTarget         = GetPathToTarget().normalized;
+            Vector2 toTarget         = Target.Position - Position;
             Vector2 relativeVelocity = Target.Velocity - Velocity;
 
             float a = Vector2.Dot(relativeVelocity, relativeVelocity) - m_ProjectileSpeed * m_ProjectileSpeed;

@@ -10,8 +10,8 @@ namespace Managers
 {
     public class GameManager : IStartable, IDisposable
     {
-        [Inject] private PlayerBehaviour m_Player;
-        [Inject] private WavesManager    m_WavesManager;
+        [Inject] private readonly PlayerBehaviour m_Player;
+        [Inject] private readonly WavesManager    m_WavesManager;
         
         private CancellationTokenSource m_WaveTokenSource;
         
@@ -36,15 +36,15 @@ namespace Managers
             }
 
             m_WavesManager.ClearWave();
-            
-            await UniTask.WaitForSeconds(2.0f);
-
-            m_Player.Lives++;
-            Debug.Log($"Player revived. Lives: {m_Player.Lives}");
         }
-        private void OnPlayerDeath()
+        private void OnPlayerDeath() => m_WaveTokenSource?.Cancel();
+
+        public void Revive()
         {
-            m_WaveTokenSource?.Cancel();
+            m_WavesManager.Wave--;
+            m_Player.Lives++;
+            
+            GameLoop().Forget();
         }
     }
 }
