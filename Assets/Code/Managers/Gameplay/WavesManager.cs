@@ -10,7 +10,7 @@ using UnityEngine;
 using VContainer;
 using Random = UnityEngine.Random;
 
-namespace Managers
+namespace Managers.Gameplay
 {
     public class WavesManager
     {

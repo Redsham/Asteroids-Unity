@@ -21,18 +21,19 @@ namespace UI.Elements
         }
         
         
-        public async UniTask Show(UniTask fadeTask)
+        public async UniTask Show(Func<UniTask> fadeTask)
         {
             gameObject.SetActive(true);
             
             await LMotion.Create(0.0f, 1.0f, 0.25f)
                 .Bind(value => m_Image.color = new Color(0.0f, 0.0f, 0.0f, value));
             
-            await fadeTask;
+            await fadeTask.Invoke();
             
             await LMotion.Create(1.0f, 0.0f, 0.25f)
                 .Bind(value => m_Image.color = new Color(0.0f, 0.0f, 0.0f, value));
+            
+            gameObject.SetActive(false);
         }
-        public async UniTask Show(Func<UniTask> fadeTask) => await Show(fadeTask());
     }
 }

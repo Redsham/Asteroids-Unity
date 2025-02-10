@@ -6,7 +6,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Managers
+namespace Managers.Gameplay
 {
     public class GameManager : IStartable, IDisposable
     {
@@ -16,6 +16,13 @@ namespace Managers
         [Inject] private readonly WavesManager    m_WavesManager;
         
         private CancellationTokenSource m_WaveTokenSource;
+
+        #endregion
+
+        #region Events
+
+        public event Action OnBeginPlay = delegate { };
+        public event Action OnEndPlay   = delegate { };
 
         #endregion
 
@@ -33,6 +40,8 @@ namespace Managers
         
         private async UniTask GameLoop()
         {
+            OnBeginPlay.Invoke();
+            
             m_Player.Movement.Position = Vector2.zero;
             m_Player.Movement.Rotation = 0.0f;
             
@@ -43,8 +52,14 @@ namespace Managers
             }
 
             m_WavesManager.ClearWave();
+            
+            OnEndPlay.Invoke();
         }
-        private void OnPlayerDeath() => m_WaveTokenSource?.Cancel();
+
+        private void OnPlayerDeath()
+        {
+            m_WaveTokenSource?.Cancel();
+        }
 
         public void Revive()
         {

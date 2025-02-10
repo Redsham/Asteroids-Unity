@@ -1,10 +1,12 @@
 {
-    "name": "Editor",
+    "name": "JoysticksEditor",
     "rootNamespace": "",
     "references": [
-        "GUID:a42bdd653373d774bb60dea4f187e662"
+        "GUID:43afd6579635b7344855a090c75a262e"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

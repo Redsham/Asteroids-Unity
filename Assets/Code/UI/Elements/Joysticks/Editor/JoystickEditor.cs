@@ -1,8 +1,7 @@
-using UI.Elements.Joysticks;
 using UnityEditor;
 using Application = UnityEngine.Device.Application;
 
-namespace UI.Joysticks.Editor
+namespace UI.Elements.Joysticks.Editor
 {
     public abstract class JoystickEditor<T> : UnityEditor.Editor where T : Joystick
     {

@@ -1,10 +1,11 @@
 using System;
 using Gameplay.Asteroids;
 using Gameplay.Enemies;
+using Gameplay.Player;
 using VContainer;
 using VContainer.Unity;
 
-namespace Managers
+namespace Managers.Gameplay
 {
     public class ScoreManager : IInitializable, IDisposable
     {
@@ -23,7 +24,9 @@ namespace Managers
         
         [Inject] private readonly AsteroidsManager m_Asteroids;
         [Inject] private readonly EnemiesManager   m_Enemies;
-
+        [Inject] private readonly WavesManager     m_Waves;
+        [Inject] private readonly PlayerBehaviour  m_Player;
+        
         #endregion
 
         public event Action<uint> OnScoreChanged;

@@ -1,7 +1,6 @@
-using UI.Elements.Joysticks;
 using UnityEditor;
 
-namespace UI.Joysticks.Editor
+namespace UI.Elements.Joysticks.Editor
 {
     [CustomEditor(typeof(StaticJoystick))]
     public class StaticJoystickEditor : JoystickEditor<StaticJoystick>

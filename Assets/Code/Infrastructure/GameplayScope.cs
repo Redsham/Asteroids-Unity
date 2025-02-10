@@ -6,6 +6,7 @@ using Gameplay.Player.Inputs;
 using Gameplay.Projectiles;
 using Gameplay.UnboundedSpace;
 using Managers;
+using Managers.Gameplay;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

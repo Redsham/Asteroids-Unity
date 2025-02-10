@@ -1,11 +1,14 @@
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using Managers;
+using Managers.Gameplay;
 using TMPro;
 using UI.Elements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
+using Yandex;
+using Yandex.Advertising;
 
 namespace UI.Gameplay
 {
@@ -110,9 +113,25 @@ namespace UI.Gameplay
         {
             if (!m_IsInteractable)
                 return;
-            
+
+            ReviveRoutine().Forget();
             m_IsInteractable = false;
-            m_GameManager.Revive();
+        }
+        
+        private async UniTaskVoid ReviveRoutine()
+        {
+            YandexRewardAdv.AdsResult result = await YandexRewardAdv.Show();
+            
+            if (result.Status == YandexAdsStatus.Failed)
+            {
+                m_IsInteractable = true;
+                return;
+            }
+            
+            if (result.Rewarded)
+                m_GameManager.Revive();
+            else
+                m_IsInteractable = true;
         }
     }
 }
