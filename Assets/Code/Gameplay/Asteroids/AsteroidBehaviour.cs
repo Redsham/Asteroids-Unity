@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Audio.Sources;
 using Gameplay.Projectiles;
 using Gameplay.UnboundedSpace;
 using Other;
@@ -29,6 +30,7 @@ namespace Gameplay.Asteroids
         private Rigidbody2D       m_Rigidbody;
         private LineRenderer      m_LineRenderer;
         private PolygonCollider2D m_PolygonCollider;
+        private WorldAudioSource  m_HumAudioSource;
 
         public event Action OnDestroy = delegate { };
         
@@ -38,6 +40,7 @@ namespace Gameplay.Asteroids
             m_LineRenderer    = GetComponent<LineRenderer>();
             m_PolygonCollider = GetComponent<PolygonCollider2D>();
             m_Rigidbody       = GetComponent<Rigidbody2D>();
+            m_HumAudioSource  = GetComponent<WorldAudioSource>();
         }
         
         #region Collision
@@ -69,6 +72,10 @@ namespace Gameplay.Asteroids
             // Set polygon collider path
             m_PolygonCollider.pathCount = 1;
             m_PolygonCollider.SetPath(0, vertices);
+            
+            m_HumAudioSource.Play();
+            m_HumAudioSource.Pitch = Mathf.Lerp(1.0f, 0.5f, (float)level / (float)AsteroidLevel.Large);
+            m_HumAudioSource.Volume = Mathf.Lerp(0.25f, 1.0f, (float)level / (float)AsteroidLevel.Large);
             
             Level = level;
         }

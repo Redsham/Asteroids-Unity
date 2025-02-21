@@ -9,7 +9,7 @@ namespace Gameplay.Cameras
         public static ICameraController Active { get; private set; }
         internal static void SetActive(ICameraController controller)
         {
-            if (Active != null)
+            if (Active != null && controller != null)
                 throw new Exception("Only one camera controller can be active at a time.");
             
             Active = controller;

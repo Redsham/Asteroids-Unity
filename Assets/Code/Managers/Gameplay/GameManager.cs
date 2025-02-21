@@ -41,6 +41,7 @@ namespace Managers.Gameplay
         private async UniTask GameLoop()
         {
             OnBeginPlay.Invoke();
+            Debug.Log("[GameManager] Game loop started");
             
             m_Player.Movement.Position = Vector2.zero;
             m_Player.Movement.Rotation = 0.0f;
@@ -54,11 +55,13 @@ namespace Managers.Gameplay
             m_WavesManager.ClearWave();
             
             OnEndPlay.Invoke();
+            Debug.Log("[GameManager] Game loop ended");
         }
 
         private void OnPlayerDeath()
         {
             m_WaveTokenSource?.Cancel();
+            Debug.Log("[GameManager] Player died");
         }
 
         public void Revive()
@@ -67,6 +70,8 @@ namespace Managers.Gameplay
             m_Player.Lives++;
             
             GameLoop().Forget();
+            
+            Debug.Log("[GameManager] Player revived");
         }
     }
 }

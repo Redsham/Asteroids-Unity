@@ -6,6 +6,7 @@ using Managers.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using VContainer;
 
@@ -46,8 +47,6 @@ namespace UI.Gameplay.Elements
         private void OnWaveStarted(uint wave) => Notify(m_WaveStarted).Forget();
         private async UniTaskVoid Notify(LocalizedString localizedText)
         {
-            string text = await localizedText.GetLocalizedStringAsync(m_Manager.Wave);
-            
             m_Background.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             
             m_Text.text = string.Empty;
@@ -66,14 +65,36 @@ namespace UI.Gameplay.Elements
                              m_Background.color = new Color(1.0f, 1.0f, 1.0f, time);
                              m_Background.rectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, time);
                          });
+
+
+            #region Text Animation
+
+            string text = await localizedText.GetLocalizedStringAsync(m_Manager.Wave);
+            bool[] charFlags = new bool[text.Length];
             
-            foreach (char c in text)
+            foreach (char _ in text)
             {
-                m_Text.text += c;
+                // Randomly select a character
+                int index;
+                do
+                {
+                    index = Random.Range(0, text.Length);
+                } while (charFlags[index]);
+                
+                // Set the character flag
+                charFlags[index] = true;
+                m_Text.text      = string.Empty;
+                
+                // Display the text
+                for (int i = 0; i < text.Length; i++)
+                    m_Text.text += charFlags[i] ? text[i] : ' ';
+                
                 await UniTask.WaitForSeconds(0.01f);
             }
             
             await UniTask.WaitForSeconds(1.0f);
+
+            #endregion
             
             await LMotion.Create(1.0f, 0.0f, 0.25f)
                          .WithEase(Ease.InCubic)

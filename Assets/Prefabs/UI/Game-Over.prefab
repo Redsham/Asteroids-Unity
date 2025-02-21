@@ -807,6 +807,7 @@ GameObject:
   - component: {fileID: 2053796256553232083}
   - component: {fileID: 5670488996096824086}
   - component: {fileID: 6044429562327241592}
+  - component: {fileID: 65931031365768158}
   m_Layer: 5
   m_Name: Game-Over
   m_TagString: Untagged
@@ -905,6 +906,23 @@ MonoBehaviour:
   - {fileID: 4668855145029157154}
   - {fileID: 7630160285012023049}
   - {fileID: 6096710618334061377}
+  m_SoundSource: {fileID: 65931031365768158}
+--- !u!114 &65931031365768158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290514474968586141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b052d307964505a35d31877b5e0a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: 11400000, guid: 9380d7c499f165644b28679b043fd597, type: 2}
+  InstanceVolume: 1
+  InstancePitch: 1
+  InstancePlayOnAwake: 1
 --- !u!1 &4871060370536975479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1129,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.35
+  m_fontSize: 59.6
   m_fontSizeBase: 54.52
   m_fontWeight: 400
   m_enableAutoSizing: 1

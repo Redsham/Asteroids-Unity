@@ -1,4 +1,5 @@
 using System;
+using Audio.Assets;
 using UnityEngine;
 
 namespace Audio
@@ -15,7 +16,8 @@ namespace Audio
         }
         
         
-        void Play(UniAudioAsset        asset);
-        void PlayWorld(WorldAudioAsset asset, Vector2 position);
+        void Play(UniAudioAsset                asset);
+        void PlayInterface(InterfaceAudioAsset asset);
+        void PlayWorld(WorldAudioAsset         asset, Vector2 position);
     }
 }

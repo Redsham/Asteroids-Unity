@@ -1,4 +1,4 @@
-namespace Yandex.Advertising
+namespace YandexSdk.Advertising
 {
     public enum YandexAdsStatus
     {

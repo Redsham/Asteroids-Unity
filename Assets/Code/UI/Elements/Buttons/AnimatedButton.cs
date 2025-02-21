@@ -1,3 +1,4 @@
+using Audio.Assets;
 using LitMotion;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,6 +39,9 @@ namespace UI.Elements.Buttons
                                        .WithEase(Ease.OutExpo)
                                        .Bind(time => m_HoverFactor = time);
                 
+                if(value)
+                    PlaySound(m_HoverSound);
+                
                 m_IsHovered = value;
             }
         }
@@ -48,6 +52,8 @@ namespace UI.Elements.Buttons
         
         private MotionHandle m_HoverMotion;
         private MotionHandle m_ClickMotion;
+        
+        [SerializeField] private InterfaceAudioAsset m_HoverSound;
 
         #endregion
 

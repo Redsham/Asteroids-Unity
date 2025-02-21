@@ -71,6 +71,7 @@ namespace Audio
                     break;
             }
         }
+        public void PlayInterface(InterfaceAudioAsset asset) => PlayUIInternal(asset).Forget();
         public void PlayWorld(WorldAudioAsset asset, Vector2 position) => PlayWorldInternal(asset, position).Forget();
         
         private async UniTaskVoid PlayUIInternal(InterfaceAudioAsset asset)

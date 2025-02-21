@@ -2,7 +2,8 @@
     "name": "Buttons",
     "rootNamespace": "",
     "references": [
-        "GUID:3b570a5146f9d4f0fa107ed4559471a3"
+        "GUID:3b570a5146f9d4f0fa107ed4559471a3",
+        "GUID:a42bdd653373d774bb60dea4f187e662"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

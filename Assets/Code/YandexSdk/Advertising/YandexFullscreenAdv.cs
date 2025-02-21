@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using AOT;
 using Cysharp.Threading.Tasks;
 
-namespace Yandex.Advertising
+namespace YandexSdk.Advertising
 {
     public static class YandexFullscreenAdv
     {
@@ -37,6 +37,20 @@ namespace Yandex.Advertising
             // Return the status
             return YandexAdsStatus.Closed;
         }
+
+        #region Editor
+        #if UNITY_EDITOR
+        
+        private static async UniTask<YandexAdsStatus> ShowEditor()
+        {
+            await UniTask.WaitForSeconds(0.5f);
+            Status = YandexAdsStatus.Showing;
+            await UniTask.WaitForSeconds(0.5f);
+            return YandexAdsStatus.Closed;
+        }
+        
+        #endif
+        #endregion
 
         #region External
 

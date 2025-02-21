@@ -1,18 +1,17 @@
+using Audio.Sources;
 using Cysharp.Threading.Tasks;
 using LitMotion;
-using Managers;
 using Managers.Gameplay;
 using TMPro;
 using UI.Elements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
-using Yandex;
-using Yandex.Advertising;
+using YandexSdk.Advertising;
 
 namespace UI.Gameplay
 {
-    public class GameOverUI : MonoBehaviour
+    public class GameOverView : MonoBehaviour
     {
         #region Fields
 
@@ -22,6 +21,8 @@ namespace UI.Gameplay
         [SerializeField] private TextMeshProUGUI m_WaveText;
 
         [SerializeField] private CanvasGroup[] m_Elements;
+
+        [SerializeField] private InterfaceAudioSource m_SoundSource;
 
         [Inject] private readonly GameManager  m_GameManager;
         [Inject] private readonly ScoreManager m_ScoreManager;
@@ -45,6 +46,9 @@ namespace UI.Gameplay
             m_WaveText.text  = "00";
             
             gameObject.SetActive(true);
+            
+            // Play sound
+            m_SoundSource.Play();
             
             // Hide elements
             foreach (CanvasGroup element in m_Elements)

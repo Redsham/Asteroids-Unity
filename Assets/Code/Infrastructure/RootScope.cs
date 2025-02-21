@@ -1,4 +1,5 @@
 using Audio;
+using Audio.Music;
 using UI.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +22,12 @@ namespace Infrastructure
             
             // Register fade
             builder.RegisterComponentInHierarchy<Fade>();
+            
+            // Register Music Player
+            builder.RegisterComponentInHierarchy<MusicPlayer>();
+            
+            // Register Preferences
+            builder.RegisterEntryPoint<Preferences>().AsSelf();
         }
     }
 }

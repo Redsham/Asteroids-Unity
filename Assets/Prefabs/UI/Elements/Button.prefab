@@ -304,4 +304,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  m_Graphics: []
+  InternalInteractable: 1
+  ClickSound: {fileID: 11400000, guid: 3d114360b9cb47e40ae247ad2f785aea, type: 2}
+  m_HoverSound: {fileID: 11400000, guid: aaed5e8fbb8d07b4db1593a77647dfbe, type: 2}

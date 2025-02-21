@@ -50,6 +50,7 @@ namespace Gameplay.Cameras
             
             transform.position = Position + (Vector3)shake;
         }
+        private void OnDestroy() => ICameraController.SetActive(null);
 
         public void     Shake(CameraShakeBase shake) => m_Shakes.Add(shake);
     }

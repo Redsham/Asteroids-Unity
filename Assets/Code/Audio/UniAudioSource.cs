@@ -9,8 +9,10 @@ namespace Audio
             get => m_Asset;
             set
             {
-                m_Asset        = value;
+                m_Asset          = value;
                 AudioSource.clip = m_Asset.Clip;
+                
+                ApplyVolumeAndPitch();
             }
         }
         
@@ -44,7 +46,7 @@ namespace Audio
         
         private void Awake()
         {
-            if(m_Asset.PlayOnManager && !m_Asset.Loop)
+            if(m_Asset && m_Asset.PlayOnManager && !m_Asset.Loop)
                 return;
             
             AudioSource = gameObject.AddComponent<AudioSource>();
@@ -65,8 +67,15 @@ namespace Audio
         
         protected void ApplyVolumeAndPitch()
         {
-            if(m_Asset.PlayOnManager && !m_Asset.Loop)
+            if(AudioSource == null)
                 return;
+
+            if (m_Asset == null)
+            {
+                AudioSource.volume = Volume;
+                AudioSource.pitch  = Pitch;
+                return;
+            }
             
             AudioSource.volume = m_Asset.Volume * Volume;
             AudioSource.pitch  = m_Asset.Pitch * Pitch;
@@ -74,10 +83,19 @@ namespace Audio
 
         protected virtual void Setup(AudioSource audioSource)
         {
-            audioSource.clip         = m_Asset.Clip;
-            audioSource.playOnAwake  = m_Asset.PlayOnAwake && InstancePlayOnAwake;
-            audioSource.loop         = m_Asset.Loop;
+            audioSource.clip         = m_Asset?.Clip;
             audioSource.rolloffMode  = AudioRolloffMode.Linear;
+
+            if (m_Asset != null)
+            {
+                audioSource.playOnAwake = m_Asset.PlayOnAwake && InstancePlayOnAwake;
+                audioSource.loop        = m_Asset.Loop;
+            }
+            else
+            {
+                audioSource.playOnAwake = InstancePlayOnAwake;
+                audioSource.loop        = false;
+            }
         }
         
         public void Play()
@@ -87,6 +105,14 @@ namespace Audio
             else
                 PlaySelf();
         }
+        public void Stop()
+        {
+            if(m_Asset.PlayOnManager)
+                throw new System.Exception("Cannot stop a sound that is played on the manager");
+            
+            AudioSource.Stop();
+        }
+        
         protected abstract void PlaySelf();
         protected abstract void PlayOnManager();
     }

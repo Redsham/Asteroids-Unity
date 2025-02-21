@@ -1,3 +1,5 @@
+using Audio;
+using Audio.Assets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -17,6 +19,8 @@ namespace UI.Elements.Buttons
         [SerializeField, InspectorName("Interactable")] 
         protected bool InternalInteractable = true;
 
+        [SerializeField] protected InterfaceAudioAsset ClickSound;
+
         
         private void OnEnable() => Interactable = InternalInteractable;
 
@@ -30,7 +34,17 @@ namespace UI.Elements.Buttons
             
             HandleInput();
         }
-        protected virtual void HandleInput() => m_OnClick.Invoke();
+        protected virtual void HandleInput()
+        {
+            PlaySound(ClickSound);
+            m_OnClick.Invoke();
+        }
+        
+        protected void PlaySound(InterfaceAudioAsset sound)
+        {
+            if (Interactable && sound != null)
+                IUniAudioManager.Active.PlayInterface(sound);
+        }
 
         private void OnValidate()
         {

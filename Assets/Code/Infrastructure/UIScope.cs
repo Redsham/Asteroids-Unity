@@ -15,7 +15,7 @@ namespace Infrastructure
             builder.RegisterComponentInHierarchy<WaveNotify>();
             
             // Register UI screens
-            builder.RegisterComponentInHierarchy<GameOverUI>();
+            builder.RegisterComponentInHierarchy<GameOverView>();
             builder.RegisterComponentInHierarchy<GameScreensDrawer>();
         }
     }

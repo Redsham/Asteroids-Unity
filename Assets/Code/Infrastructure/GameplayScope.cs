@@ -5,7 +5,6 @@ using Gameplay.Player;
 using Gameplay.Player.Inputs;
 using Gameplay.Projectiles;
 using Gameplay.UnboundedSpace;
-using Managers;
 using Managers.Gameplay;
 using UnityEngine;
 using VContainer;
@@ -16,8 +15,6 @@ namespace Infrastructure
 {
     public class GameplayScope : LifetimeScope
     {
-        [SerializeField] private bool m_IsMobile;
-        
         protected override void Configure(IContainerBuilder builder)
         {
             // Register camera controller
@@ -43,7 +40,7 @@ namespace Infrastructure
             });
             
             // Register player input
-            if (m_IsMobile)
+            if (Application.isMobilePlatform)
                 builder.RegisterEntryPoint<MobileInput>().As<Input>();
             else
                 builder.RegisterEntryPoint<DesktopInput>().As<Input>();

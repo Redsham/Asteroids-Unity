@@ -2,8 +2,9 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-namespace Yandex
+namespace YandexSdk
 {
     public static class YandexGamesSdk
     {
@@ -11,14 +12,23 @@ namespace Yandex
         
         #region Initialization
 
-        public static  bool   IsInitialized => GetYandexSdkIsInitialized();
-        private static Action s_OnInitialized = delegate { };
+        public static  bool IsInitialized => GetYandexSdkIsInitialized();
+        private static bool s_IsInitializing = false;
         
         public static async UniTask Initialize()
         {
-            YandexSdkInitialize(OnInitializeSuccessCallback);
+            s_IsInitializing = true;
             
-            await UniTask.WaitUntil(() => IsInitialized);
+            #if !UNITY_EDITOR
+            YandexSdkInitialize(OnInitializeSuccessCallback);
+            await UniTask.WaitWhile(() => s_IsInitializing);
+            #else
+            await UniTask.WaitForSeconds(1.0f);
+            s_IsInitializing = false;
+            #endif
+            
+            if (LOGGING)
+                Debug.Log("[YandexGamesSdk] Yandex Games SDK initialized");
         }
         
         #region External
@@ -30,13 +40,7 @@ namespace Yandex
         private static extern void YandexSdkInitialize(Action successCallback);
 
         [MonoPInvokeCallback(typeof(Action))]
-        private static void OnInitializeSuccessCallback()
-        {
-            if (LOGGING)
-                UnityEngine.Debug.Log("YandexGamesSdk: Initialized");
-            
-            s_OnInitialized.Invoke();
-        }
+        private static void OnInitializeSuccessCallback() => s_IsInitializing = false;
 
         #endregion
 
@@ -44,7 +48,18 @@ namespace Yandex
 
         #region Game Layout
 
-        public static void Ready() => YandexSdkGameReady();
+        public static void Ready()
+        {
+            // Send the ready state to the native code
+            #if !UNITY_EDITOR
+            
+            YandexSdkGameReady();
+            
+            #endif
+            
+            if (LOGGING)
+                Debug.Log("[YandexGamesSdk] Game is marked as ready");
+        }
 
         public static bool Playing
         {
@@ -56,10 +71,18 @@ namespace Yandex
                 
                 s_Playing = value;
                 
+                // Send the playing state to the native code
+                #if !UNITY_EDITOR
+                
                 if (s_Playing)
                     YandexSdkGameplayStart();
                 else
                     YandexSdkGameplayStop();
+                
+                #endif
+                
+                if (LOGGING)
+                    Debug.Log($"[YandexGamesSdk] Playing state changed to {s_Playing}");
             }
         }
         private static bool s_Playing = false;

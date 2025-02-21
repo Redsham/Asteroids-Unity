@@ -11,7 +11,7 @@ namespace UI.Gameplay
     {
         [SerializeField] private CanvasGroup m_GameUI;
 
-        [Inject] private readonly GameOverUI  m_GameOverUI;
+        [Inject] private readonly GameOverView  m_GameOverView;
         [Inject] private readonly PlayerBehaviour m_Player;
         
         private MotionHandle m_MotionHandle;
@@ -44,14 +44,14 @@ namespace UI.Gameplay
                                  .WithEase(Ease.OutBounce)
                                  .Bind(time => m_GameUI.alpha = 1.0f - time);
         }
-        private void OnExploded() => m_GameOverUI.Show().Forget();
+        private void OnExploded() => m_GameOverView.Show().Forget();
         private void OnRevived() => Revive().Forget();
         
         private async UniTaskVoid Revive()
         {
             m_MotionHandle.TryComplete();
             
-            await m_GameOverUI.Hide();
+            await m_GameOverView.Hide();
             
             m_GameUI.alpha = 0.0f;
             m_GameUI.gameObject.SetActive(true);

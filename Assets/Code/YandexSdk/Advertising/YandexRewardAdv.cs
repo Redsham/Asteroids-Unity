@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using AOT;
 using Cysharp.Threading.Tasks;
 
-namespace Yandex.Advertising
+namespace YandexSdk.Advertising
 {
     public static class YandexRewardAdv
     {
@@ -29,6 +29,10 @@ namespace Yandex.Advertising
             Status   = YandexAdsStatus.Loading;
             Rewarded = false;
             
+            #if UNITY_EDITOR
+            return await ShowEditor();
+            #endif
+            
             YandexSdkShowRewardedVideo(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
             
             // Wait for the ad is loaded
@@ -44,7 +48,21 @@ namespace Yandex.Advertising
             // Return the status
             return new AdsResult(Rewarded, Status);
         }
-
+        
+        #region Editor
+        #if UNITY_EDITOR
+        
+        private static async UniTask<AdsResult> ShowEditor()
+        {
+            await UniTask.WaitForSeconds(0.5f);
+            Status = YandexAdsStatus.Showing;
+            await UniTask.WaitForSeconds(0.5f);
+            return new AdsResult(true, YandexAdsStatus.Closed);
+        }
+        
+        #endif
+        #endregion
+        
         #region External
 
         [DllImport("__Internal")]
