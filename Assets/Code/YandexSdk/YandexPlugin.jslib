@@ -95,6 +95,17 @@ const yandexPluginLibrary = {
             yandexPlugin.sdk.features.GameplayAPI.stop()
         },
 
+        // Pause
+        bindEvents: function (pausedCallbackPtr, resumedCallbackPtr) {
+            yandexPlugin.sdk.on('game_api_pause', function () {
+              dynCall('v', pausedCallbackPtr, []);
+            });
+
+            yandexPlugin.sdk.on('game_api_resume', function () {
+              dynCall('v', resumedCallbackPtr, []);
+            });
+        },
+
         // Advertising
         showRewardedVideo: function (openCallbackPtr, rewardedCallbackPtr, closeCallbackPtr, errorCallbackPtr) {
           yandexPlugin.sdk.adv.showRewardedVideo({
@@ -156,6 +167,13 @@ const yandexPluginLibrary = {
       yandexPlugin.throwIfSdkNotInitialized();
 
       yandexPlugin.gameplayStop();
+    },
+
+    // Pause
+    YandexSdkBindEvents: function (pausedCallbackPtr, resumedCallbackPtr) {
+      yandexPlugin.throwIfSdkNotInitialized();
+
+      yandexPlugin.bindEvents(pausedCallbackPtr, resumedCallbackPtr);
     },
 
     // Advertising

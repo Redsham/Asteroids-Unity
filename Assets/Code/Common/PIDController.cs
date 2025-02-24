@@ -1,6 +1,6 @@
 using System;
 
-namespace Other
+namespace Common
 {
     [Serializable]
     public class PIDController

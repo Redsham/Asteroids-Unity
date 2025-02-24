@@ -445,26 +445,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1167912989}
-  - component: {fileID: 1167912988}
+  - component: {fileID: 1167912990}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: Scope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1167912988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167912987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265ed6e1d2f245a3ba12344b2f9dfae0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1167912989
 Transform:
   m_ObjectHideFlags: 0
@@ -480,6 +468,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1167912990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167912987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc72176828d4cacb883ad51de273ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: Infrastructure.RootScope
+  autoRun: 1
+  autoInjectGameObjects: []
 --- !u!1 &1410199484
 GameObject:
   m_ObjectHideFlags: 0

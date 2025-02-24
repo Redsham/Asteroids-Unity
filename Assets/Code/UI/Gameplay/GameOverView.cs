@@ -108,8 +108,20 @@ namespace UI.Gameplay
 
             m_Fade.Show(async () =>
             {
-                Debug.Log("Quit to menu");
+                Debug.Log("[Game-Over] Quit to menu");
                 await SceneManager.LoadSceneAsync("Menu");
+            }).Forget();
+            m_IsInteractable = false;
+        }
+        public void Retry()
+        {
+            if (!m_IsInteractable)
+                return;
+
+            m_Fade.Show(async () =>
+            {
+                Debug.Log("[Game-Over] Restart");
+                await SceneManager.LoadSceneAsync("Gameplay");
             }).Forget();
             m_IsInteractable = false;
         }
@@ -124,8 +136,9 @@ namespace UI.Gameplay
         
         private async UniTaskVoid ReviveRoutine()
         {
-            YandexRewardAdv.AdsResult result = await YandexRewardAdv.Show();
+            Debug.Log("[Game-Over] Revive");
             
+            YandexRewardAdv.AdsResult result = await YandexRewardAdv.Show();
             if (result.Status == YandexAdsStatus.Failed)
             {
                 m_IsInteractable = true;

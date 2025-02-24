@@ -1,5 +1,5 @@
 using System;
-using Other;
+using Common;
 using UnityEngine;
 
 namespace Gameplay.Cameras

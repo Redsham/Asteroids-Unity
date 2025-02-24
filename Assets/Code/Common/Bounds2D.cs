@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Other
+namespace Common
 {
     public struct Bounds2D
     {

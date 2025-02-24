@@ -1,6 +1,6 @@
 using System;
+using Common;
 using Gameplay.UnboundedSpace;
-using Other;
 using UnityEngine;
 
 namespace Gameplay.Projectiles

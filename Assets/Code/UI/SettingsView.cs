@@ -1,4 +1,5 @@
 using LitMotion;
+using Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

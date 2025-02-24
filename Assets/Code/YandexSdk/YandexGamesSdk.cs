@@ -17,14 +17,15 @@ namespace YandexSdk
         
         public static async UniTask Initialize()
         {
-            s_IsInitializing = true;
-            
             #if !UNITY_EDITOR
+            s_IsInitializing = true;
+
             YandexSdkInitialize(OnInitializeSuccessCallback);
             await UniTask.WaitWhile(() => s_IsInitializing);
+            
+            s_IsInitializing = false;
             #else
             await UniTask.WaitForSeconds(1.0f);
-            s_IsInitializing = false;
             #endif
             
             if (LOGGING)

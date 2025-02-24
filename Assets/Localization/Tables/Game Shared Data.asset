@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: exit_menu
     m_Metadata:
       m_Items: []
+  - m_Id: 4196091825217536
+    m_Key: restart
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

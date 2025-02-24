@@ -1,7 +1,7 @@
 using System;
+using Common;
 using Gameplay.Projectiles;
 using Gameplay.UnboundedSpace;
-using Other;
 using UnityEngine;
 
 namespace Gameplay.Enemies

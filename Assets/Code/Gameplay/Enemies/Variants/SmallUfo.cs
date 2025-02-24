@@ -1,4 +1,4 @@
-using Other;
+using Common;
 using UnityEngine;
 
 namespace Gameplay.Enemies.Variants

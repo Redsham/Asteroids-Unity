@@ -1,3 +1,4 @@
+using Gameplay.Cameras;
 using Managers.Menu;
 using VContainer;
 using VContainer.Unity;
@@ -10,6 +11,9 @@ namespace Infrastructure
         {
             // Register managers
             builder.RegisterComponentInHierarchy<MenuManager>();
+            
+            // Register camera
+            builder.RegisterComponentInHierarchy<ICameraController>();
         }
     }
 }

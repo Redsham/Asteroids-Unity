@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Other;
+using Common;
 using UnityEngine;
 
 namespace Gameplay.Cameras

@@ -5,6 +5,7 @@ using Gameplay.Player;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using YandexSdk;
 
 namespace Managers.Gameplay
 {
@@ -41,6 +42,7 @@ namespace Managers.Gameplay
         private async UniTask GameLoop()
         {
             OnBeginPlay.Invoke();
+            YandexGamesSdk.Playing = true;
             Debug.Log("[GameManager] Game loop started");
             
             m_Player.Movement.Position = Vector2.zero;
@@ -55,6 +57,7 @@ namespace Managers.Gameplay
             m_WavesManager.ClearWave();
             
             OnEndPlay.Invoke();
+            YandexGamesSdk.Playing = false;
             Debug.Log("[GameManager] Game loop ended");
         }
 

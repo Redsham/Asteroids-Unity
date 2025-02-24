@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using AOT;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace YandexSdk.Advertising
 {
@@ -42,8 +43,14 @@ namespace YandexSdk.Advertising
             if (Status == YandexAdsStatus.Failed)
                 return AdsResult.Failed;
             
+            // Pause the audio listener
+            AudioListener.pause = true;
+            
             // Wait for the ad to close
             await UniTask.WaitUntil(() => Status == YandexAdsStatus.Closed);
+            
+            // Resume the audio listener
+            AudioListener.pause = false;
             
             // Return the status
             return new AdsResult(Rewarded, Status);

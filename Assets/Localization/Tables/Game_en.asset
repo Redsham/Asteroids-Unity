@@ -46,6 +46,10 @@ MonoBehaviour:
     m_Localized: Quit to Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 4196091825217536
+    m_Localized: Try again!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
