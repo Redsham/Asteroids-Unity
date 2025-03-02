@@ -23,6 +23,8 @@ namespace UI.Gameplay
         [SerializeField] private CanvasGroup[] m_Elements;
 
         [SerializeField] private InterfaceAudioSource m_SoundSource;
+        
+        [SerializeField] private ReviveView m_ReviveView;
 
         [Inject] private readonly GameManager  m_GameManager;
         [Inject] private readonly ScoreManager m_ScoreManager;
@@ -73,6 +75,14 @@ namespace UI.Gameplay
             // Play animations
             PlayScoreAnimation(m_ScoreManager.Score);
             PlayWavesAnimation(m_WavesManager.Wave);
+
+            // Show revive view if not revived
+            if (!m_GameManager.WasRevived)
+            {
+                await UniTask.WhenAll(m_ScoreAnimation.ToUniTask(), m_WavesAnimation.ToUniTask());
+                await UniTask.WaitForSeconds(0.5f);
+                await m_ReviveView.ShowAndWait();
+            }
             
             m_IsInteractable = true;
         }
@@ -127,9 +137,6 @@ namespace UI.Gameplay
         }
         public void Revive()
         {
-            if (!m_IsInteractable)
-                return;
-
             ReviveRoutine().Forget();
             m_IsInteractable = false;
         }

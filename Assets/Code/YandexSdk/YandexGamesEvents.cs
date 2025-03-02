@@ -11,8 +11,7 @@ namespace YandexSdk
         public static bool IsPaused { get; private set; } = false;
 
         
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize()
+        public static void Initialize()
         {
             #if !UNITY_EDITOR
             YandexSdkBindEvents(GamePaused, GameResumed);
@@ -27,6 +26,9 @@ namespace YandexSdk
                     GamePaused();
             };
             #endif
+            
+            if (YandexGamesSdk.LOGGING)
+                Debug.Log("[YandexGamesEvents] Initialized");
         }
         
         
@@ -37,6 +39,7 @@ namespace YandexSdk
         private static void GamePaused()
         {
             AudioListener.pause = true;
+            Time.timeScale = 0.0f;
             
             // Log
             if (YandexGamesSdk.LOGGING)
@@ -51,6 +54,7 @@ namespace YandexSdk
         private static void GameResumed()
         {
             AudioListener.pause = false;
+            Time.timeScale = 1.0f;
             
             // Log
             if (YandexGamesSdk.LOGGING)

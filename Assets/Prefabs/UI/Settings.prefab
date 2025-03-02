@@ -626,8 +626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e0c17941bb4f5d8c1b83801cdbde57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Background: {fileID: 2124559189126072909}
-  m_Content: {fileID: 6539408023401735494}
+  BackgroundComponent: {fileID: 2124559189126072909}
+  BodyComponent: {fileID: 6539408023401735494}
   m_MasterVolumeSlider: {fileID: 7837965081478336626}
   m_MusicVolumeSlider: {fileID: 4499802196861874525}
   m_LanguageDropdown: {fileID: 1656970817843079102}

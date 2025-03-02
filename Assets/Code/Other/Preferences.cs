@@ -35,8 +35,6 @@ namespace Other
         {
             await LocalizationSettings.InitializationOperation;
             
-            Debug.Log($"[Preferences] " + LocalizationSettings.AvailableLocales.Locales.Count);
-
             if (HasSaved())
             {
                 Load();

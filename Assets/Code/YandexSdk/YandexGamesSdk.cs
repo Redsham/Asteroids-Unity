@@ -28,6 +28,8 @@ namespace YandexSdk
             await UniTask.WaitForSeconds(1.0f);
             #endif
             
+            YandexGamesEvents.Initialize();
+            
             if (LOGGING)
                 Debug.Log("[YandexGamesSdk] Yandex Games SDK initialized");
         }

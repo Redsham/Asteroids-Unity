@@ -13,6 +13,8 @@ namespace Managers.Gameplay
     {
         #region Fields
 
+        public bool WasRevived { get; private set; }
+        
         [Inject] private readonly PlayerBehaviour m_Player;
         [Inject] private readonly WavesManager    m_WavesManager;
         
@@ -60,7 +62,6 @@ namespace Managers.Gameplay
             YandexGamesSdk.Playing = false;
             Debug.Log("[GameManager] Game loop ended");
         }
-
         private void OnPlayerDeath()
         {
             m_WaveTokenSource?.Cancel();
@@ -69,6 +70,7 @@ namespace Managers.Gameplay
 
         public void Revive()
         {
+            WasRevived = true;
             m_WavesManager.Wave--;
             m_Player.Lives++;
             

@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56080326451200
-    m_Key: revive
+    m_Key: revive_watch
     m_Metadata:
       m_Items: []
   - m_Id: 56615314120704
@@ -41,6 +41,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4196091825217536
     m_Key: restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7460922019799040
+    m_Key: revive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7461139653844992
+    m_Key: revive_skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7465768475156480
+    m_Key: revive_title
     m_Metadata:
       m_Items: []
   m_Metadata:

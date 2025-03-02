@@ -1,32 +1,24 @@
 using LitMotion;
 using Other;
 using TMPro;
+using UI.Elements;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
 namespace UI
 {
-    public class SettingsView : MonoBehaviour
+    public class SettingsView : ModalWindow
     {
-        [Header("View")]
-        [SerializeField] private Image m_Background;
-        [SerializeField] private CanvasGroup m_Content;
-        
         [Header("Settings")]
         [SerializeField] private Slider       m_MasterVolumeSlider;
         [SerializeField] private Slider       m_MusicVolumeSlider;
         [SerializeField] private TMP_Dropdown m_LanguageDropdown;
 
         [Inject] private readonly Preferences m_Preferences;
-
-        private RectTransform m_ContentRect;
-        private MotionHandle  m_MotionHandle;
-
+        
         private void Awake()
         {
-            m_ContentRect = m_Content.transform as RectTransform;
-            
             m_MasterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
             m_MusicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
             m_LanguageDropdown.onValueChanged.AddListener(OnLanguageChanged);
@@ -38,38 +30,10 @@ namespace UI
             m_LanguageDropdown.SetValueWithoutNotify(m_Preferences.Language);
         }
         
-        public void Show()
-        {
-            gameObject.SetActive(true);
-            
-            m_MotionHandle.TryComplete();
-            m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.25f)
-                                     .WithEase(Ease.OutSine)
-                                     .Bind(time =>
-                                     {
-                                         m_Background.color = new Color(0.0f, 0.0f, 0.0f, time * 0.99f);
-                                         
-                                         m_Content.alpha    = time;
-                                         m_ContentRect.anchoredPosition = new Vector2(0.0f, Mathf.Lerp(-100.0f, 0.0f, time));
-                                     });
-        }
-        public void Hide()
+        public override void Hide()
         {
             m_Preferences.Save();
-
-            m_MotionHandle.TryComplete();
-            m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
-                                    .WithEase(Ease.OutSine)
-                                    .WithOnComplete(() => gameObject.SetActive(false))
-                                    .Bind(time =>
-                                    {
-                                        float invTime = 1.0f - time;
-                                        
-                                        m_Background.color = new Color(0.0f, 0.0f, 0.0f, invTime * 0.99f);
-                                        
-                                        m_Content.alpha    = invTime;
-                                        m_ContentRect.anchoredPosition = new Vector2(0.0f, Mathf.Lerp(0.0f, 100.0f, time));
-                                    });
+            base.Hide();
         }
         
         #region Event Handlers

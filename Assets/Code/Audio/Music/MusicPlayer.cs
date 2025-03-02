@@ -51,7 +51,7 @@ namespace Audio.Music
 
         private void Awake()
         {
-            m_Source        = gameObject.AddComponent<InterfaceAudioSource>();
+            m_Source = gameObject.AddComponent<InterfaceAudioSource>();
         }
         private void Start()
         {
@@ -97,7 +97,7 @@ namespace Audio.Music
                 float transition = 0.0f;
                 do
                 {
-                    transition         += Time.deltaTime / m_TransitionTime;
+                    transition       += Time.deltaTime / m_TransitionTime;
                     ControlledVolume =  m_TransitionCurve.Evaluate(transition);
                     
                     await UniTask.Yield();
